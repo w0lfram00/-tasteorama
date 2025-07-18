@@ -7,7 +7,10 @@ const usersSchema = new Schema(
     password: { type: String, required: true },
     savedRecipes: [
       {
-        type: Schema.Types.ObjectId,
+        id: {
+          type: Schema.Types.ObjectId,
+          required: true,
+        },
         required: true,
       },
     ],
