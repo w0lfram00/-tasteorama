@@ -1,6 +1,6 @@
+import type { NextFunction, Request, Response } from 'express';
 import createHttpError from 'http-errors';
 import { isValidObjectId } from 'mongoose';
-import { Request, Response, NextFunction } from 'express';
 
 export function isValidId(req: Request, res: Response, next: NextFunction) {
   const { contactId } = req.params;

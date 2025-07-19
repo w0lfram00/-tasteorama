@@ -22,7 +22,7 @@ export interface Recipe {
   title: string;
   category: string;
   owner: Types.ObjectId;
-  area: string;
+  area?: string;
   instructions: string;
   description: string;
   thumb: string;

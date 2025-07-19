@@ -9,9 +9,8 @@ const usersSchema = new Schema(
       {
         id: {
           type: Schema.Types.ObjectId,
-          required: true,
+          ref: 'recipes',
         },
-        required: true,
       },
     ],
   },

@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
 
 export const validateBody = (schema: Joi.ObjectSchema) => {
@@ -7,7 +7,7 @@ export const validateBody = (schema: Joi.ObjectSchema) => {
     try {
       await schema.validateAsync(req.body, { abortEarly: false });
       next();
-    } catch (err) {
+    } catch (err: any) {
       const error = createHttpError(400, 'Bad request', {
         errors: err.details,
       });

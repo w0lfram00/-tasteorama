@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const recipes = new Schema(
   {
@@ -11,13 +11,13 @@ const recipes = new Schema(
       required: true,
     },
     owner: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
     },
     area: {
       type: String,
     },
-    instractions: {
+    instructions: {
       type: String,
       required: true,
     },
@@ -49,3 +49,5 @@ const recipes = new Schema(
   },
   { timestamps: true, versionKey: false },
 );
+
+export const RecipesCollection = model('recipes', recipes);
