@@ -1,4 +1,7 @@
-export const parseNumber = (number: string, defaultValue: number) => {
+export const parseNumber = (
+  number: string | undefined,
+  defaultValue?: number,
+) => {
   if (!(typeof number === 'string')) return defaultValue;
 
   const parsedNumber = parseInt(number);

@@ -37,6 +37,7 @@ const recipes = new Schema(
       {
         id: {
           type: Schema.Types.ObjectId,
+          ref: 'ingredients',
           required: true,
         },
         measure: {

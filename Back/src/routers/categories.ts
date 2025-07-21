@@ -5,6 +5,6 @@ import { getAllCategoriesController } from '../controllers/categories.ts';
 
 const categoriesRouter = Router();
 
-categoriesRouter.get('/categories', ctrlWrapper(getAllCategoriesController));
+categoriesRouter.get('/', ctrlWrapper(getAllCategoriesController));
 
 export default categoriesRouter;

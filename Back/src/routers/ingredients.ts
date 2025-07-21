@@ -5,6 +5,6 @@ import { authenticate } from '../middlewares/authenticate.ts';
 
 const ingredientsRouter = Router();
 
-ingredientsRouter.get('/ingredients', ctrlWrapper(getAllIngredientsController));
+ingredientsRouter.get('/', ctrlWrapper(getAllIngredientsController));
 
 export default ingredientsRouter;
