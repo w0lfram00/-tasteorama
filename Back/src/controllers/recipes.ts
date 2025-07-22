@@ -1,16 +1,20 @@
 import type { Request, Response } from 'express';
 import { saveToCloudinary } from '../utils/saveToCloudinary.ts';
 import {
+  addOrRemoveRecipeToSaved,
   createRecipe,
+  deleteRecipe,
   getAllRecipesFiltered,
   getOwnedRecipes,
   getRecipeById,
+  getSavedRecipes,
 } from '../services/recipes.ts';
 import type { RequestWithUser } from '../interfaces/AuthRequest.ts';
 import { parsePaginationParams } from '../utils/parsePaginationParams.ts';
 import { parseFilterParams } from '../utils/parseFilterParams.ts';
 import createHttpError from 'http-errors';
 import { Types } from 'mongoose';
+import { toObjId } from '../utils/toObjId.ts';
 
 export const getAllRecipesFilteredController = async (
   req: Request,
@@ -28,7 +32,7 @@ export const getAllRecipesFilteredController = async (
 };
 
 export const getRecipeByIdController = async (req: Request, res: Response) => {
-  const recipeId = new Types.ObjectId(req.params.recipeId);
+  const recipeId = toObjId(req.params.recipeId);
   const recipe = await getRecipeById(recipeId);
 
   if (!recipe) throw createHttpError(404, 'Recipe not found');
@@ -53,6 +57,7 @@ export const postRecipeController = async (
   const recipe = await createRecipe({
     ...req.body,
     thumb: imgUrl,
+    img: imgUrl,
     owner: req.user._id,
   });
 
@@ -74,4 +79,40 @@ export const getOwnedRecipesController = async (
     message: 'Successfully found recipes!',
     data: recipes,
   });
+};
+
+export const addOrRemoveRecipeToSavedController = async (
+  req: RequestWithUser,
+  res: Response,
+) => {
+  const result = await addOrRemoveRecipeToSaved(req.user, req.body.recipeId);
+  if (!result) throw createHttpError(404, 'User not found');
+
+  res.json({
+    status: 200,
+    message: 'Successfully added recipe to saved!',
+    data: result,
+  });
+};
+
+export const getSavedRecipesController = async (
+  req: RequestWithUser,
+  res: Response,
+) => {
+  const result = await getSavedRecipes(req.user);
+  res.json({
+    status: 200,
+    message: 'Successfully found saved recipes',
+    ...result,
+  });
+};
+
+export const deleteRecipeController = async (
+  req: RequestWithUser,
+  res: Response,
+) => {
+  const recipe = await deleteRecipe(toObjId(req.params.recipeId));
+  if (!recipe) throw createHttpError(404, 'Recipe not found');
+
+  res.status(204).send();
 };

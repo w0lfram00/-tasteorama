@@ -7,8 +7,7 @@ export const getAllIngredientsController = async (
   res: Response,
 ) => {
   const ingredients = await getAllIngredients();
-  if (!ingredients)
-    throw createHttpError(404, 'No ingredients have been found');
+
   res.json({
     status: 200,
     message: `Successfully fetched for list of ingredients`,

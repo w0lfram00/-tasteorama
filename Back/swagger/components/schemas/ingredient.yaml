@@ -1,0 +1,13 @@
+type: object
+required:
+  - _id
+  - name
+properties:
+  _id:
+    description: 'id of ingredient'
+    type: string
+    example: 640c2dd963a319ea671e37aa
+  name:
+    description: 'Name of ingredient'
+    type: string
+    example: Squid

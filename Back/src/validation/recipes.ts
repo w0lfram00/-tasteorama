@@ -20,3 +20,9 @@ export const createRecipeSchema = Joi.object({
       }).required(),
     ),
 });
+
+export const addToSavedSchema = Joi.object({
+  recipeId: Joi.string().min(20).max(35).required(),
+});
+
+export const addToSavedExtraSchema = Joi.array().items(addToSavedSchema);

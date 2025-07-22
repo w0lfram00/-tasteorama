@@ -10,11 +10,9 @@ export interface Category {
   name: string;
 }
 
-export interface ingredients {
+export interface Ingredient {
   _id: Types.ObjectId;
   name: string;
-  desc: string;
-  img: string;
 }
 
 export interface Recipe {
@@ -22,15 +20,27 @@ export interface Recipe {
   title: string;
   category: string;
   owner: Types.ObjectId;
-  area?: string;
+  area?: string | null;
   instructions: string;
   description: string;
   thumb: string;
+  img?: string | null;
   time: string;
-  ingredients: Array<{ id: Types.ObjectId; measure: string }>;
+  ingredients: Array<{ ingredient: Types.ObjectId; measure: string }>;
+}
+
+export interface RecipePopulated extends Omit<Recipe, 'ingredients'> {
+  ingredients: Array<{ ingredient: Ingredient; measure: string }>;
 }
 
 export interface User {
+  _id: Types.ObjectId;
+  name: string;
+  email: string;
+  savedRecipes: Array<Types.ObjectId>;
+}
+
+export interface UserPopulated {
   _id: Types.ObjectId;
   name: string;
   email: string;

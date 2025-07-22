@@ -29,13 +29,16 @@ const recipes = new Schema(
       type: String,
       required: true,
     },
+    img: {
+      type: String,
+    },
     time: {
       type: String,
       required: true,
     },
     ingredients: [
       {
-        id: {
+        ingredient: {
           type: Schema.Types.ObjectId,
           ref: 'ingredients',
           required: true,
@@ -44,7 +47,6 @@ const recipes = new Schema(
           type: String,
           required: true,
         },
-        required: true,
       },
     ],
   },

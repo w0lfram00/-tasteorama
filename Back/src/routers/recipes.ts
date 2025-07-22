@@ -1,16 +1,24 @@
 import { Router } from 'express';
 import { authenticate } from '../middlewares/authenticate.ts';
 import { validateBody } from '../middlewares/validateBody.ts';
-import { createRecipeSchema } from '../validation/recipes.ts';
+import {
+  addToSavedExtraSchema,
+  addToSavedSchema,
+  createRecipeSchema,
+} from '../validation/recipes.ts';
 import { upload } from '../middlewares/multer.ts';
 import { ctrlWrapper } from '../utils/ctrlWrapper.ts';
 import {
+  addOrRemoveRecipeToSavedController,
+  deleteRecipeController,
   getAllRecipesFilteredController,
   getOwnedRecipesController,
   getRecipeByIdController,
+  getSavedRecipesController,
   postRecipeController,
 } from '../controllers/recipes.ts';
 import { isValidId } from '../middlewares/isValidId.ts';
+import { isOwnerOfId } from '../middlewares/isOwnerOfId.ts';
 
 const recipesRouter = Router();
 
@@ -32,5 +40,20 @@ recipesRouter.post(
 );
 
 recipesRouter.get('/owned', ctrlWrapper(getOwnedRecipesController));
+
+recipesRouter.patch(
+  '/save',
+  validateBody(addToSavedSchema, addToSavedExtraSchema),
+  ctrlWrapper(addOrRemoveRecipeToSavedController),
+);
+
+recipesRouter.get('/saved', ctrlWrapper(getSavedRecipesController));
+
+recipesRouter.delete(
+  '/',
+  isValidId,
+  isOwnerOfId,
+  ctrlWrapper(deleteRecipeController),
+);
 
 export default recipesRouter;

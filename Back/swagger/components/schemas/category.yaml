@@ -1,0 +1,13 @@
+type: object
+required:
+  - _id
+  - name
+properties:
+  _id:
+    description: 'Id of category'
+    type: string
+    example: 65e4decdd286b30065d54af9
+  name:
+    description: 'Name of category'
+    type: string
+    example: 'Desert'

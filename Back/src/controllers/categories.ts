@@ -7,7 +7,7 @@ export const getAllCategoriesController = async (
   res: Response,
 ) => {
   const categories = await getAllCategories();
-  if (!categories) throw createHttpError(404, 'No categories has been found');
+
   res.json({
     status: 200,
     message: `Successfully fetched for list of categories`,

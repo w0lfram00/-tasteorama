@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: TesteoramaBackend
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: Backend for Tasteorama studying project.
+tags:
+  - name: Recipes
+    description: Operations with recipes.
+  - name: Auth
+    description: Auth operations.
+  - name: Users
+    description: Operations  with user's information
+  - name: Category
+    description: Operations with Categories
+  - name: Ingredients
+    description: Operations with Ingredients
+servers:
+  - url: http://localhost:3000
+paths:
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
