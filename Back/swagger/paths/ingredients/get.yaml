@@ -1,0 +1,29 @@
+tags:
+  - Ingredients
+summary: Get all Ingredients
+operationId: getIngredients
+description: 'Get for all Ingredients'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: 'Successfully fetched for list of ingredients'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully fetched for list of ingredients
+            data:
+              type: array
+              items:
+                $ref: '../../components/schemas/ingredient.yaml'

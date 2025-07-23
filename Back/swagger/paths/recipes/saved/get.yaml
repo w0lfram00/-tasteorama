@@ -1,0 +1,76 @@
+tags:
+  - Recipes
+summary: Get all saved recipes
+operationId: getAllSavedRecipes
+description: 'Get for all recipes saved by currently logged user'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+      example: 1
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 10
+responses:
+  '200':
+    description: 'Successfully found recipes!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found recipes!
+            data:
+              type: object
+              required:
+                - data
+                - hadDeleted
+                - page
+                - perPage
+                - totalPages
+                - totalItems
+                - hasPreviousPage
+                - hasNextPage
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '../../../components/schemas/recipe.yaml'
+                hadDeleted:
+                  type: boolean
+                  description: 'Says if some of previously saved recipes have been deleted'
+                  example: true
+                page:
+                  type: number
+                  example: 1
+                perPage:
+                  type: number
+                  example: 10
+                totalItems:
+                  type: number
+                  example: 60
+                totalPages:
+                  type: number
+                  example: 6
+                hasNextPage:
+                  type: boolean
+                  example: true
+                hasPreviousPage:
+                  type: boolean
+                  example: false
+  '401':
+    $ref: '../../../components/responses/401.yaml'

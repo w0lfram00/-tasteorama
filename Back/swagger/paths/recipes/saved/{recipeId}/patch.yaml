@@ -1,0 +1,38 @@
+tags:
+  - Recipes
+summary: Switch 'saved' of recipe
+operationId: switchSavedOfRecipe
+description: "If given recipe isn't saved by user yet, it becomes saved. If it is saved already, "
+security:
+  - bearerAuth: []
+parameters:
+  - name: recipeId
+    in: path
+    required: true
+    schema:
+      type: string
+      example: 65ca67e7ae7f10c88b598384
+responses:
+  '200':
+    description: 'Successfully saved/unsaved recipe!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully saved recipe!
+            data:
+              $ref: '../../../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../../components/responses/404.yaml'

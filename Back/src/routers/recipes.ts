@@ -42,7 +42,7 @@ recipesRouter.post(
 recipesRouter.get('/owned', ctrlWrapper(getOwnedRecipesController));
 
 recipesRouter.patch(
-  '/save',
+  '/saved/:recipeId',
   validateBody(addToSavedSchema, addToSavedExtraSchema),
   ctrlWrapper(addOrRemoveRecipeToSavedController),
 );
@@ -50,7 +50,7 @@ recipesRouter.patch(
 recipesRouter.get('/saved', ctrlWrapper(getSavedRecipesController));
 
 recipesRouter.delete(
-  '/',
+  '/:recipeId',
   isValidId,
   isOwnerOfId,
   ctrlWrapper(deleteRecipeController),

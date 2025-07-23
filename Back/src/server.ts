@@ -24,7 +24,7 @@ export const setupServer = () => {
   //   }),
   // );
 
-  app.use(router);
+  app.use('/api', router);
 
   app.use(notFoundHandler);
 

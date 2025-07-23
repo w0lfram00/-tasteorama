@@ -13,7 +13,6 @@ import type { RequestWithUser } from '../interfaces/AuthRequest.ts';
 import { parsePaginationParams } from '../utils/parsePaginationParams.ts';
 import { parseFilterParams } from '../utils/parseFilterParams.ts';
 import createHttpError from 'http-errors';
-import { Types } from 'mongoose';
 import { toObjId } from '../utils/toObjId.ts';
 
 export const getAllRecipesFilteredController = async (
@@ -72,12 +71,14 @@ export const getOwnedRecipesController = async (
   req: RequestWithUser,
   res: Response,
 ) => {
-  const recipes = await getOwnedRecipes(req.user._id);
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const result = await getOwnedRecipes({ user: req.user, page, perPage });
 
   res.json({
     status: 200,
     message: 'Successfully found recipes!',
-    data: recipes,
+    data: result,
   });
 };
 
@@ -85,13 +86,18 @@ export const addOrRemoveRecipeToSavedController = async (
   req: RequestWithUser,
   res: Response,
 ) => {
-  const result = await addOrRemoveRecipeToSaved(req.user, req.body.recipeId);
+  const result = await addOrRemoveRecipeToSaved(
+    req.user,
+    toObjId(req.params.recipeId),
+  );
   if (!result) throw createHttpError(404, 'User not found');
 
   res.json({
     status: 200,
-    message: 'Successfully added recipe to saved!',
-    data: result,
+    message: `Successfully ${
+      result.addedRecipe ? 'added recipe to' : 'removed recipe from'
+    } saved!`,
+    data: result.data,
   });
 };
 
@@ -99,11 +105,14 @@ export const getSavedRecipesController = async (
   req: RequestWithUser,
   res: Response,
 ) => {
-  const result = await getSavedRecipes(req.user);
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const result = await getSavedRecipes({ user: req.user, page, perPage });
+
   res.json({
     status: 200,
     message: 'Successfully found saved recipes',
-    ...result,
+    data: result,
   });
 };
 

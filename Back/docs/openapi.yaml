@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: TesteoramaBackend
+  title: TesteoramaBackendSwagger
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -13,13 +13,41 @@ tags:
     description: Auth operations.
   - name: Users
     description: Operations  with user's information
-  - name: Category
+  - name: Categories
     description: Operations with Categories
   - name: Ingredients
     description: Operations with Ingredients
 servers:
   - url: http://localhost:3000
 paths:
+  /recipes:
+    get:
+      $ref: '../swagger/paths/recipes/get.yaml'
+    post:
+      $ref: '../swagger/paths/recipes/post.yaml'
+  /recipes/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipes/{recipeId}/get.yaml'
+    delete:
+      $ref: '../swagger/paths/recipes/{recipeId}/delete.yaml'
+  /recipes/owned:
+    get:
+      $ref: '../swagger/paths/recipes/owned/get.yaml'
+  /recipes/saved:
+    get:
+      $ref: '../swagger/paths/recipes/saved/get.yaml'
+  /recipes/saved/{recipeId}:
+    patch:
+      $ref: '../swagger/paths/recipes/saved/{recipeId}/patch.yaml'
+  /categories:
+    get:
+      $ref: '../swagger/paths/categories/get.yaml'
+  /ingredients:
+    get:
+      $ref: '../swagger/paths/ingredients/get.yaml'
+  /users:
+    get:
+      $ref: '../swagger/paths/users/get.yaml'
 components:
   securitySchemes:
     bearerAuth:

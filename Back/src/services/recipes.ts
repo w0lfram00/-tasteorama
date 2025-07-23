@@ -3,6 +3,7 @@ import { RecipesCollection } from '../db/models/recipes.ts';
 import type {
   CreateRecipe,
   GetAllRecipesFiltered,
+  GetAllRecipesForUser,
 } from '../interfaces/validation/recipes.ts';
 import { calculatePaginationData } from '../utils/calculatePaginationData.ts';
 import { UsersCollection } from '../db/models/users.ts';
@@ -58,11 +59,25 @@ export const createRecipe = async (payload: CreateRecipe): Promise<Recipe> => {
   return recipe;
 };
 
-export const getOwnedRecipes = async (
-  userId: Types.ObjectId,
-): Promise<Recipe[]> => {
-  const recipes = await RecipesCollection.find({ owner: userId });
-  return recipes;
+export const getOwnedRecipes = async ({
+  user,
+  page = 1,
+  perPage = 10,
+}: GetAllRecipesForUser): Promise<{ data: Recipe[] } & PaginationData> => {
+  const skip = (page - 1) * perPage;
+
+  const recipesQuery = RecipesCollection.find({ owner: user._id });
+
+  const [recipesCount, recipes] = await Promise.all([
+    RecipesCollection.find().merge(recipesQuery).countDocuments(),
+    recipesQuery.skip(skip).limit(perPage).exec(),
+  ]);
+  const paginationData = calculatePaginationData(recipesCount, page, perPage);
+
+  return {
+    data: recipes,
+    ...paginationData,
+  };
 };
 
 const checkRecipeId = async (recipeId: Types.ObjectId) => {
@@ -75,23 +90,16 @@ const isRecipeSaved = (user: User, recipeId: Types.ObjectId): boolean =>
 
 export const addOrRemoveRecipeToSaved = async (
   user: User,
-  recipeId: Types.ObjectId | Array<Types.ObjectId>,
-): Promise<User | null> => {
-  if (!Array.isArray(recipeId)) {
-    checkRecipeId(recipeId);
+  recipeId: Types.ObjectId | undefined,
+): Promise<{ data: User; addedRecipe: boolean } | null> => {
+  if (!recipeId) return null;
 
-    if (isRecipeSaved(user, recipeId))
-      user.savedRecipes.filter((value) => value != recipeId);
-    else user.savedRecipes.push(recipeId);
-  } else {
-    recipeId.forEach((id) => {
-      checkRecipeId(id);
-
-      if (isRecipeSaved(user, id))
-        user.savedRecipes.filter((value) => value != id);
-      else user.savedRecipes.push(id);
-    });
-  }
+  checkRecipeId(recipeId);
+  let addedRecipe = true;
+  if (isRecipeSaved(user, recipeId)) {
+    addedRecipe = false;
+    user.savedRecipes.filter((value) => value != recipeId);
+  } else user.savedRecipes.push(recipeId);
 
   const result = await UsersCollection.findByIdAndUpdate(
     { _id: user._id },
@@ -101,27 +109,45 @@ export const addOrRemoveRecipeToSaved = async (
 
   if (!result || !result.value) return null;
 
-  return result.value;
+  return {
+    data: result.value,
+    addedRecipe,
+  };
 };
 
-export const getSavedRecipes = async (
-  user: User,
-): Promise<{ data: Recipe[]; hasDeleted: boolean }> => {
-  const recipes = await RecipesCollection.find({
+export const getSavedRecipes = async ({
+  user,
+  page = 1,
+  perPage = 10,
+}: GetAllRecipesForUser): Promise<
+  { data: Recipe[]; hadDeleted: boolean } & PaginationData
+> => {
+  const skip = (page - 1) * perPage;
+
+  const recipesQuery = RecipesCollection.find({
     _id: { $in: [user.savedRecipes] },
   });
-  let hasDeleted = false;
-  if (recipes.length < user.savedRecipes.length) {
-    hasDeleted = true;
+
+  const [recipesCount, recipes] = await Promise.all([
+    RecipesCollection.find().merge(recipesQuery).countDocuments(),
+    recipesQuery.skip(skip).limit(perPage).exec(),
+  ]);
+  const paginationData = calculatePaginationData(recipesCount, page, perPage);
+
+  let hadDeleted = false;
+  if (recipesCount < user.savedRecipes.length) {
+    hadDeleted = true;
     user.savedRecipes = recipes.map((recipe) => recipe._id);
     await UsersCollection.findByIdAndUpdate(
       { _id: user._id },
       { savedRecipes: user.savedRecipes },
     );
   }
+
   return {
     data: recipes,
-    hasDeleted,
+    hadDeleted,
+    ...paginationData,
   };
 };
 

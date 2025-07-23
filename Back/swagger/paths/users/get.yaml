@@ -1,0 +1,29 @@
+tags:
+  - Users
+summary: Get user info
+operationId: getUser
+description: 'Get info for currently logged user'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: 'Successfully found details of user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found user with id 6462a8f74c3d0ddd2889800c!
+            data:
+              $ref: '../../components/schemas/userDetailed.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'

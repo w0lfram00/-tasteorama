@@ -1,14 +1,24 @@
-import type { Recipe } from '../db.ts';
+import type { Types } from 'mongoose';
+import type { Recipe, User } from '../db.ts';
 
 export interface CreateRecipe extends Omit<Recipe, '_id'> {}
 
-export interface GetAllRecipesFiltered
+interface Pagination
   extends Partial<{
     page: number;
     perPage: number;
-    filter: Partial<{
-      title: string;
-      category: string;
-      ingredient: string;
-    }>;
   }> {}
+
+export interface GetAllRecipesForUser extends Pagination {
+  user: User;
+}
+
+export interface GetAllRecipesFiltered extends Pagination {
+  filter: Partial<{
+    title: string;
+    category: string;
+    ingredient: string;
+  }>;
+}
+{
+}
