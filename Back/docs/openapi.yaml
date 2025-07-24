@@ -18,7 +18,7 @@ tags:
   - name: Ingredients
     description: Operations with Ingredients
 servers:
-  - url: http://localhost:3000
+  - url: https://tasteorama-idz6.onrender.com/api
 paths:
   /recipes:
     get:
