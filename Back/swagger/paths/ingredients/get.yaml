@@ -3,8 +3,7 @@ tags:
 summary: Get all Ingredients
 operationId: getIngredients
 description: 'Get for all Ingredients'
-security:
-  - bearerAuth: []
+security: []
 responses:
   '200':
     description: 'Successfully fetched for list of ingredients'

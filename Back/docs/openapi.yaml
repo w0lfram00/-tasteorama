@@ -53,3 +53,11 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+    cookieRefresh:
+      type: apiKey
+      in: cookie
+      name: refreshToken; Path=/; HttpOnly
+    cookieSessionId:
+      type: apiKey
+      in: cookie
+      name: sessionId; Path=/; HttpOnly

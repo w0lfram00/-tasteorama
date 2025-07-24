@@ -3,8 +3,7 @@ tags:
 summary: Get all categories
 operationId: getCategories
 description: 'Get for all categories'
-security:
-  - bearerAuth: []
+security: []
 responses:
   '200':
     description: 'Successfully fetched for list of categories'

@@ -45,11 +45,7 @@
         "summary": "Get all recipes",
         "operationId": "getAllRecipes",
         "description": "Get for all recipes with filters applied",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "parameters": [
           {
             "in": "query",
@@ -288,11 +284,7 @@
         "summary": "Get recipe by Id",
         "operationId": "getRecipeById",
         "description": "Get recipes by Id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "parameters": [
           {
             "name": "recipeId",
@@ -664,11 +656,7 @@
         "summary": "Get all categories",
         "operationId": "getCategories",
         "description": "Get for all categories",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "responses": {
           "200": {
             "description": "Successfully fetched for list of categories",
@@ -712,11 +700,7 @@
         "summary": "Get all Ingredients",
         "operationId": "getIngredients",
         "description": "Get for all Ingredients",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "responses": {
           "200": {
             "description": "Successfully fetched for list of ingredients",
@@ -806,6 +790,16 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      },
+      "cookieRefresh": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "refreshToken; Path=/; HttpOnly"
+      },
+      "cookieSessionId": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "sessionId; Path=/; HttpOnly"
       }
     },
     "schemas": {

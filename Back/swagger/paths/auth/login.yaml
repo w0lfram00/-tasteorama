@@ -1,0 +1,66 @@
+tags:
+  - Auth
+summary: Login
+operationId: login
+description: 'Login in account'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            example: exmple@gmail.com
+          password:
+            description: "User's password"
+            type: string
+            example: 1234qwerty
+responses:
+  '200':
+    description: >
+      Successfully logged in an account!  
+      The session ID and refresh token are returned in a cookies named 'sessionId' and 'refreshToken'. You need to include those cookies in subsequent requests, if required.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in an user!
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  description: Token for accessing created session
+                  example: 'KPB1q/g1Kj6+Pr5Fr3Vm5hIzcCdHeMkeh3+tLfGr'
+    headers:
+      Set-Cookie:
+        schema:
+          type: object
+          properties:
+            refreshToken:
+              type: string
+              example: refreshToken=AlFvhVUpo8ernVzDBAcC9xnfbUTMyMkTNud7N5XW; Path=/; HttpOnly
+            sessionId:
+              type: string
+              example: sessionId=j%3A%22688235b14bbc4fc1ca96119a%22; Path=/; HttpOnly
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'

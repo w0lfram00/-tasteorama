@@ -3,8 +3,7 @@ tags:
 summary: Get all recipes
 operationId: getAllRecipes
 description: 'Get for all recipes with filters applied'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - in: query
     name: page
