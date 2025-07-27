@@ -8,17 +8,17 @@ export const isOwnerOfId = async (
   res: Response,
   next: NextFunction,
 ) => {
-  if (!(await RecipesCollection.findById(req.params.contactId))) {
-    next(createHttpError(404, 'Contact not found'));
+  if (!(await RecipesCollection.findById(req.params.recipeId))) {
+    next(createHttpError(404, 'Recipe not found'));
     return;
   }
 
-  const contact = await RecipesCollection.findOne({
-    userId: req.user._id,
-    _id: req.params.contactId,
+  const recipe = await RecipesCollection.findOne({
+    owner: req.user._id,
+    _id: req.params.recipeId,
   });
 
-  if (!contact) {
+  if (!recipe) {
     next(createHttpError(403));
     return;
   }

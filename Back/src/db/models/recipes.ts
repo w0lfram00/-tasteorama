@@ -38,19 +38,20 @@ const recipes = new Schema(
     },
     ingredients: [
       {
-        ingredient: {
+        id: {
           type: Schema.Types.ObjectId,
-          ref: 'ingredients',
+          ref: 'Ingredient',
           required: true,
         },
         measure: {
           type: String,
           required: true,
         },
+        _id: false,
       },
     ],
   },
   { timestamps: true, versionKey: false },
 );
 
-export const RecipesCollection = model('recipes', recipes);
+export const RecipesCollection = model('Recipe', recipes);

@@ -10,4 +10,4 @@ const categoriesSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-export const CategoriesCollection = model('categories', categoriesSchema);
+export const CategoriesCollection = model('Category', categoriesSchema);

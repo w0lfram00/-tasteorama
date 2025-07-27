@@ -10,4 +10,4 @@ const ingredientsSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-export const IngredientsCollection = model('ingredients', ingredientsSchema);
+export const IngredientsCollection = model('Ingredient', ingredientsSchema);

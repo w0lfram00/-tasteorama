@@ -15,6 +15,8 @@ import type {
 } from '../interfaces/db.ts';
 import createHttpError from 'http-errors';
 import type { PaginationData } from '../interfaces/PaginationData.ts';
+import { toObjId } from '../utils/toObjId.ts';
+import { log } from 'console';
 
 export const getAllRecipesFiltered = async ({
   filter,
@@ -23,17 +25,19 @@ export const getAllRecipesFiltered = async ({
 }: GetAllRecipesFiltered): Promise<{ data: Recipe[] } & PaginationData> => {
   const skip = (page - 1) * perPage;
 
-  const recipesQuery = RecipesCollection.find({ title: filter?.title });
+  if (!filter.title) filter.title = '';
+  const recipesQuery = RecipesCollection.find({
+    title: { $regex: filter.title, $options: 'i' },
+  });
 
   if (filter?.category) recipesQuery.where('category').equals(filter.category);
   if (filter?.ingredient)
-    recipesQuery.where('ingredient').equals(filter.ingredient);
+    await recipesQuery.where('ingredients.id').equals(filter.ingredient);
 
   const [recipesCount, recipes] = await Promise.all([
     RecipesCollection.find().merge(recipesQuery).countDocuments(),
     recipesQuery.skip(skip).limit(perPage).exec(),
   ]);
-
   const paginationData = calculatePaginationData(recipesCount, page, perPage);
 
   return {
@@ -48,7 +52,7 @@ export const getRecipeById = async (
   const recipe = await RecipesCollection.findById(recipeId)
     .populate<{
       ingredients: Array<{ ingredient: Ingredient; measure: string }>;
-    }>('ingredients', '-_id')
+    }>('ingredients.id')
     .exec();
 
   return recipe;
@@ -96,10 +100,16 @@ export const addOrRemoveRecipeToSaved = async (
 
   checkRecipeId(recipeId);
   let addedRecipe = true;
+  console.log(user.savedRecipes);
+
   if (isRecipeSaved(user, recipeId)) {
     addedRecipe = false;
-    user.savedRecipes.filter((value) => value != recipeId);
+    user.savedRecipes = user.savedRecipes.filter(
+      (value) => value.toString() !== recipeId.toString(),
+    );
   } else user.savedRecipes.push(recipeId);
+
+  console.log(user.savedRecipes);
 
   const result = await UsersCollection.findByIdAndUpdate(
     { _id: user._id },

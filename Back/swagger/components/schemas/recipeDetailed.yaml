@@ -52,7 +52,7 @@ properties:
     items:
       type: object
       required:
-        - ingredient
+        - id
         - measure
       properties:
         ingredient:

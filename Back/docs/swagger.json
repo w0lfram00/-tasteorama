@@ -11,7 +11,10 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "https://tasteorama-idz6.onrender.com/api"
+    },
+    {
+      "url": "http://localhost:3000/api"
     }
   ],
   "tags": [
@@ -37,6 +40,288 @@
     }
   ],
   "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register",
+        "operationId": "register",
+        "description": "Register an account",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "Username",
+                    "type": "string",
+                    "example": "Xx_John_Doe_xX"
+                  },
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "exmple@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "1234qwerty"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully registered a user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "operationId": "login",
+        "description": "Login in account",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "exmple@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "1234qwerty"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully logged in an account!   The session ID and refresh token are returned in a cookies named 'sessionId' and 'refreshToken'. You need to include those cookies in subsequent requests, if required.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in an user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "description": "Token for accessing created session",
+                          "example": "KPB1q/g1Kj6+Pr5Fr3Vm5hIzcCdHeMkeh3+tLfGr"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Set-Cookie": {
+                "description": "Sets cookies named 'sessionId' and 'refreshToken'",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "refreshToken=AlFvhVUpo8ernVzDBAcC9xnfbUTMyMkTNud7N5XW; Path=/; HttpOnly"
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "example": "sessionId=j%3A%22688235b14bbc4fc1ca96119a%22; Path=/; HttpOnly"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh",
+        "operationId": "refresh",
+        "description": "Refresh current session",
+        "security": [
+          {
+            "cookieRefresh": []
+          },
+          {
+            "cookieSessionId": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed session!   The session ID and refresh token are returned in a cookies named 'sessionId' and 'refreshToken'. You need to include those cookies in subsequent requests, if required.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "description": "Token for accessing created session",
+                          "example": "KPB1q/g1Kj6+Pr5Fr3Vm5hIzcCdHeMkeh3+tLfGr"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Set-Cookie": {
+                "description": "Sets cookies named 'sessionId' and 'refreshToken'",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "refreshToken=AlFvhVUpo8ernVzDBAcC9xnfbUTMyMkTNud7N5XW; Path=/; HttpOnly"
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "example": "sessionId=j%3A%22688235b14bbc4fc1ca96119a%22; Path=/; HttpOnly"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout",
+        "operationId": "logout",
+        "description": "Log from current session out",
+        "security": [
+          {
+            "cookieSessionId": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully ended session!   Cookies 'sessionId' and 'refreshToken' cleared.\n"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
     "/recipes": {
       "get": {
         "tags": [
@@ -354,7 +639,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Deleted recipe with id"
           },
           "401": {
@@ -736,7 +1021,7 @@
         }
       }
     },
-    "/users": {
+    "/users/{userId}": {
       "get": {
         "tags": [
           "Users"
@@ -747,6 +1032,17 @@
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
           }
         ],
         "responses": {
@@ -803,6 +1099,41 @@
       }
     },
     "schemas": {
+      "user": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "example": "exmple@gmail.com"
+          },
+          "savedRecipes": {
+            "description": "Recipes saved by User",
+            "type": "array",
+            "items": {
+              "description": "Recipe's id",
+              "type": "string",
+              "example": "6462a8f74c3d0ddd28898069"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
       "recipe": {
         "type": "object",
         "required": [
@@ -971,7 +1302,7 @@
             "items": {
               "type": "object",
               "required": [
-                "ingredient",
+                "id",
                 "measure"
               ],
               "properties": {
@@ -985,41 +1316,6 @@
                 }
               }
             }
-          }
-        }
-      },
-      "user": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "email"
-        ],
-        "properties": {
-          "_id": {
-            "description": "User's id",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "name": {
-            "description": "User's name",
-            "type": "string",
-            "example": "John Doe"
-          },
-          "email": {
-            "description": "User's email",
-            "type": "string",
-            "example": "exmple@gmail.com"
-          },
-          "savedRecipes": {
-            "description": "Recipes saved by User",
-            "type": "array",
-            "items": {
-              "description": "Recipe's id",
-              "type": "string",
-              "example": "6462a8f74c3d0ddd28898069"
-            },
-            "uniqueItems": true
           }
         }
       },
@@ -1143,6 +1439,43 @@
                     "message": {
                       "type": "string",
                       "example": "Something* not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Email is used by others",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Email is used"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email is used"
                     }
                   }
                 }

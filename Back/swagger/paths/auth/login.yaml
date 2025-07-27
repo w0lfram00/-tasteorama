@@ -51,6 +51,7 @@ responses:
                   example: 'KPB1q/g1Kj6+Pr5Fr3Vm5hIzcCdHeMkeh3+tLfGr'
     headers:
       Set-Cookie:
+        description: "Sets cookies named 'sessionId' and 'refreshToken'"
         schema:
           type: object
           properties:

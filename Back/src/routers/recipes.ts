@@ -25,8 +25,8 @@ const recipesRouter = Router();
 recipesRouter.get('/', ctrlWrapper(getAllRecipesFilteredController));
 
 recipesRouter.get(
-  '/:recipeId',
-  isValidId,
+  '/:recipeId\\(\\[a-fA-F0-9\\]{24}\\)',
+  isValidId('recipeId'),
   ctrlWrapper(getRecipeByIdController),
 );
 
@@ -43,6 +43,7 @@ recipesRouter.get('/owned', ctrlWrapper(getOwnedRecipesController));
 
 recipesRouter.patch(
   '/saved/:recipeId',
+  isValidId('recipeId'),
   validateBody(addToSavedSchema, addToSavedExtraSchema),
   ctrlWrapper(addOrRemoveRecipeToSavedController),
 );
@@ -51,7 +52,7 @@ recipesRouter.get('/saved', ctrlWrapper(getSavedRecipesController));
 
 recipesRouter.delete(
   '/:recipeId',
-  isValidId,
+  isValidId('recipeId'),
   isOwnerOfId,
   ctrlWrapper(deleteRecipeController),
 );

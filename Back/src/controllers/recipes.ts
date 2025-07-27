@@ -97,7 +97,7 @@ export const addOrRemoveRecipeToSavedController = async (
     message: `Successfully ${
       result.addedRecipe ? 'added recipe to' : 'removed recipe from'
     } saved!`,
-    data: result.data,
+    data: result,
   });
 };
 

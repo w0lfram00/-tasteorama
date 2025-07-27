@@ -26,7 +26,7 @@ export interface Recipe {
   thumb: string;
   img?: string | null;
   time: string;
-  ingredients: Array<{ ingredient: Types.ObjectId; measure: string }>;
+  ingredients: Array<{ id: Types.ObjectId; measure: string }>;
 }
 
 export interface RecipePopulated extends Omit<Recipe, 'ingredients'> {

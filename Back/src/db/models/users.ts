@@ -8,7 +8,7 @@ const usersSchema = new Schema(
     savedRecipes: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'recipes',
+        ref: 'Recipe',
         required: true,
       },
     ],
@@ -25,4 +25,4 @@ usersSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const UsersCollection = model('users', usersSchema);
+export const UsersCollection = model('User', usersSchema);

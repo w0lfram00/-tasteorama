@@ -2,8 +2,6 @@ import createHttpError from 'http-errors';
 import { SessionsCollection } from '../db/models/sessions.ts';
 import { UsersCollection } from '../db/models/users.ts';
 import type { NextFunction, Response, Request } from 'express';
-import type { RequestWithUser } from '../interfaces/AuthRequest.ts';
-import type { Recipe } from '../interfaces/db.ts';
 
 export const authenticate = async (
   req: any,
@@ -28,7 +26,7 @@ export const authenticate = async (
   const session = await SessionsCollection.findOne({ accessToken: token });
 
   if (!session) {
-    next(createHttpError(401, 'Session not found'));
+    next(createHttpError(404, 'Session not found'));
     return;
   }
 
@@ -38,9 +36,7 @@ export const authenticate = async (
     next(createHttpError(401, 'Access token expired'));
   }
 
-  const user = await UsersCollection.findById(session.userId)
-    .populate<{ savedRecipes: Array<Recipe> }>('recipes')
-    .exec();
+  const user = await UsersCollection.findById(session.userId);
   if (!user) {
     next(createHttpError(401, 'Wrong user to session relation'));
     return;

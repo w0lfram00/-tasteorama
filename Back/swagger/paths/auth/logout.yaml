@@ -4,14 +4,12 @@ summary: Logout
 operationId: logout
 description: 'Log from current session out'
 security:
-  - bearerAuth: []
-  - cookieRefresh: []
   - cookieSessionId: []
 responses:
-  '200':
+  '204':
     description: >
       Successfully ended session!  
-      The session ID and refresh token are returned in a cookies named 'sessionId' and 'refreshToken'. You need to include those cookies in subsequent requests, if required.
+      Cookies 'sessionId' and 'refreshToken' cleared.
   '401':
     $ref: '../../components/responses/401.yaml'
   '404':
