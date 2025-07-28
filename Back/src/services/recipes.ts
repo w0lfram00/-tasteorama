@@ -59,7 +59,7 @@ export const getRecipeById = async (
 };
 
 export const createRecipe = async (payload: CreateRecipe): Promise<Recipe> => {
-  const recipe = await RecipesCollection.create({ payload });
+  const recipe = await RecipesCollection.create(payload);
   return recipe;
 };
 

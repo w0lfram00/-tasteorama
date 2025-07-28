@@ -34,7 +34,7 @@ recipesRouter.use(authenticate);
 
 recipesRouter.post(
   '/',
-  upload.single('img'),
+  upload.single('thumb'),
   validateBody(createRecipeSchema),
   ctrlWrapper(postRecipeController),
 );

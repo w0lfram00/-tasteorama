@@ -48,7 +48,7 @@ requestBody:
                 - ingredient
                 - measure
               properties:
-                ingredient:
+                id:
                   type: string
                   description: 'Id of ingredient used'
                   example: 65ca67e7ae7f10c88b598384

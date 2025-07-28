@@ -47,19 +47,17 @@ export const postRecipeController = async (
   req: RequestWithUser,
   res: Response,
 ) => {
-  const img = req.file;
+  const thumb = req.file;
   let imgUrl;
-  if (img) imgUrl = await saveToCloudinary(img);
-
-  const query = req.query;
+  if (thumb) imgUrl = await saveToCloudinary(thumb);
 
   const recipe = await createRecipe({
     ...req.body,
+    ingredients: JSON.parse(req.body.ingredients),
     thumb: imgUrl,
     img: imgUrl,
     owner: req.user._id,
   });
-
   res.status(201).json({
     status: 201,
     message: 'Successfully created a recipe!',
