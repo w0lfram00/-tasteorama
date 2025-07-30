@@ -1,0 +1,38 @@
+.userMenu {
+  display: flex;
+  gap: 28px;
+
+  .account {
+    display: flex;
+    gap: 8px;
+    position: relative;
+    align-items: center;
+
+    span {
+      border-radius: 32px;
+      background: var(--light-brown);
+      padding: 5px 12px;
+
+      display: flex;
+      place-items: center;
+
+      p {
+        display: block;
+      }
+    }
+  }
+
+  .account::after {
+    content: "";
+    position: absolute;
+    right: -17px;
+    top: -3.5px;
+    width: 1px;
+    height: 39px;
+    background: var(--white);
+  }
+
+  button {
+    background: transparent;
+  }
+}

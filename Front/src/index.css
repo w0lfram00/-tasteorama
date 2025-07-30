@@ -74,4 +74,5 @@ a {
 button {
   border-color: transparent;
   font-family: inherit;
+  cursor: pointer;
 }

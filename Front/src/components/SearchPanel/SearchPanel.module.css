@@ -1,0 +1,45 @@
+.searchPanel {
+  background: gray;
+  padding: 128px 0;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 24px;
+  }
+
+  h1 {
+    font-weight: 600;
+    font-size: 48px;
+    color: var(--white);
+
+    width: 493px;
+    height: 117px;
+    line-height: 140%;
+  }
+
+  form {
+    display: flex;
+    gap: 12px;
+
+    input {
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      padding: 12px;
+      width: 459px;
+      height: 46px;
+      max-height: 48px;
+      background: var(--white);
+    }
+    button {
+      color: var(--white);
+      font-weight: 600;
+      font-size: 16px;
+
+      border-radius: 8px;
+      padding: 13px 66px;
+      background: var(--light-brown);
+    }
+  }
+}

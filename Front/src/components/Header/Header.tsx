@@ -1,36 +1,17 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
 import Logo from "../Logo/Logo";
 import s from "./Header.module.css";
+import NavGuest from "./NavGuest";
+import NavUser from "./NavUser";
 
 const Header = () => {
+  const [isLoggedIn] = useState<boolean>(false);
+
   return (
     <header className={s.header}>
       <div className="container">
         <Logo />
-        <nav>
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ? s.activeLink : s.inactiveLink
-            }
-          >
-            Recipes
-          </NavLink>
-          <div className={s.auth}>
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                isActive ? s.activeLink : s.inactiveLink
-              }
-            >
-              Login
-            </NavLink>
-            <NavLink to="/register">
-              <button>Register</button>
-            </NavLink>
-          </div>
-        </nav>
+        <nav>{!isLoggedIn ? <NavUser /> : <NavGuest />}</nav>
       </div>
     </header>
   );

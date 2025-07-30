@@ -1,7 +1,14 @@
 import React from "react";
+import SearchPanel from "../../components/SearchPanel/SearchPanel";
 
 const RecipePage = () => {
-  return <div>RecipePage</div>;
+  const onSubmit = () => {};
+
+  return (
+    <>
+      <SearchPanel onSubmit={onSubmit} />
+    </>
+  );
 };
 
 export default RecipePage;
