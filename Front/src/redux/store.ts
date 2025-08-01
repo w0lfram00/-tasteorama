@@ -9,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import { mainReducer, type SliceState } from "./slice";
+import { recipesReducer, type RecipesSliceState } from "./recipes/slice";
 
 const persistConfig = {
   key: "main",
@@ -19,7 +19,7 @@ const persistConfig = {
 
 export const store = configureStore({
   reducer: {
-    main: persistReducer(persistConfig, mainReducer),
+    recipe: persistReducer(persistConfig, recipesReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -30,7 +30,7 @@ export const store = configureStore({
 });
 
 export type StoreState = {
-  main: SliceState;
+  recipes: RecipesSliceState;
 };
 
 export type AppStore = typeof store;
