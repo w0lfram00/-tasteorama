@@ -16,16 +16,16 @@ const RecipeItem = ({ recipe }: Props) => {
       <div>
         <div>
           <h3>{recipe.title}</h3>
-          <div>
+          {/* <div>
             <img src="" alt="" /> {recipe.time}
-          </div>
+          </div> */}
         </div>
         <p>{recipe.description}</p>
         <div>
           <NavLink to={`/recipes/${recipe._id}`}>Learn more</NavLink>
-          <button>
+          {/* <button>
             <img src="" alt="" />
-          </button>
+          </button> */}
         </div>
       </div>
     </>

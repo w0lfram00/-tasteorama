@@ -19,7 +19,7 @@ const persistConfig = {
 
 export const store = configureStore({
   reducer: {
-    recipe: persistReducer(persistConfig, recipesReducer),
+    recipes: persistReducer(persistConfig, recipesReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

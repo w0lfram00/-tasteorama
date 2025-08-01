@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 
 const RecipePage = lazy(() => import("../../pages/RecipePage/RecipePage"));
 const MainPage = lazy(() => import("../../pages/MainPage/MainPage"));
@@ -9,12 +9,14 @@ const RegisterPage = lazy(
 
 const SharedLayout = () => {
   return (
-    <body>
+    <div>
       <Routes>
         <Route index element={<MainPage />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
+        <Route path="/recipes/:recipeId" element={<RecipePage />}></Route>
       </Routes>
-    </body>
+      <Outlet />
+    </div>
   );
 };
 

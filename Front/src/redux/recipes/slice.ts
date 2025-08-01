@@ -1,11 +1,12 @@
 import { createSlice, isAnyOf, type PayloadAction } from "@reduxjs/toolkit";
-import type { Recipe } from "../../interfaces/db";
+import type { Recipe, RecipeDetailed } from "../../interfaces/db";
 import type { PaginationInfo } from "../../interfaces/requests/recipes";
-import { getRecipeById } from "./operations";
+import { getAllRecipes, getRecipeById } from "./operations";
 import selectForAllOperationsStatus from "../../utils/selectForAllOperationsStatus";
 
 export interface RecipesSliceState {
   recipes: Array<Recipe>;
+  selectedRecipe: RecipeDetailed | null;
   page: number;
   paginationInfo: PaginationInfo;
   filterOptions: Partial<{
@@ -19,6 +20,7 @@ export interface RecipesSliceState {
 
 const initialState: RecipesSliceState = {
   recipes: [],
+  selectedRecipe: null,
   page: 1,
   paginationInfo: {
     totalItems: 0,
@@ -44,7 +46,13 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getRecipeById.fulfilled, (state, action) => {})
+      .addCase(getAllRecipes.fulfilled, (state, action) => {
+        state.recipes = action.payload.data;
+        state.paginationInfo = action.payload.paginationInfo;
+      })
+      .addCase(getRecipeById.fulfilled, (state, action) => {
+        state.selectedRecipe = action.payload;
+      })
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("pending")),
         (state) => {

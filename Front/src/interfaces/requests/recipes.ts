@@ -20,11 +20,13 @@ export interface GetAllRecipesForUser extends Pagination {
 }
 
 export interface GetAllRecipesFiltered extends Pagination {
-  filter: Partial<{
+  filter?: Partial<{
     title: string;
     category: string;
     ingredient: string;
   }>;
 }
-{
+
+export interface GetAllRecipesResult extends Request {
+  data: { data: Recipe[]; page: number } & PaginationInfo;
 }
