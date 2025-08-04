@@ -1,6 +1,9 @@
 import { createSlice, isAnyOf, type PayloadAction } from "@reduxjs/toolkit";
 import type { Recipe, RecipeDetailed } from "../../interfaces/db";
-import type { PaginationInfo } from "../../interfaces/requests/recipes";
+import type {
+  FilterOptions,
+  PaginationInfo,
+} from "../../interfaces/requests/recipes";
 import { getAllRecipes, getRecipeById } from "./operations";
 import selectForAllOperationsStatus from "../../utils/selectForAllOperationsStatus";
 
@@ -9,11 +12,7 @@ export interface RecipesSliceState {
   selectedRecipe: RecipeDetailed | null;
   page: number;
   paginationInfo: PaginationInfo;
-  filterOptions: Partial<{
-    title: string;
-    category: string;
-    ingredient: string;
-  }>;
+  filterOptions: FilterOptions;
   isLoading: boolean;
   isError: unknown | null;
 }
@@ -34,7 +33,7 @@ const initialState: RecipesSliceState = {
 };
 
 const slice = createSlice({
-  name: "mainReducer",
+  name: "recipesReducer",
   initialState,
   reducers: {
     setPage: (state, action: PayloadAction<number>) => {
@@ -43,12 +42,23 @@ const slice = createSlice({
     nextPage: (state) => {
       state.page++;
     },
+    resetRecipes: (state) => {
+      state.recipes = [];
+    },
+    resetFilters: (state) => {
+      state.filterOptions = {};
+    },
+    setFilterOptions: (state, action: PayloadAction<FilterOptions>) => {
+      state.filterOptions = { ...state.filterOptions, ...action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllRecipes.fulfilled, (state, action) => {
-        state.recipes = action.payload.data;
         state.paginationInfo = action.payload.paginationInfo;
+        if (state.page != 1)
+          state.recipes = state.recipes.concat(action.payload.data);
+        else state.recipes = action.payload.data;
       })
       .addCase(getRecipeById.fulfilled, (state, action) => {
         state.selectedRecipe = action.payload;
@@ -76,4 +86,10 @@ const slice = createSlice({
 });
 
 export const recipesReducer = slice.reducer;
-export const { setPage, nextPage } = slice.actions;
+export const {
+  setPage,
+  nextPage,
+  resetFilters,
+  resetRecipes,
+  setFilterOptions,
+} = slice.actions;

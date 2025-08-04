@@ -1,7 +1,11 @@
+import { getCategories } from "./categories/operations";
+import { getIngredients } from "./ingredients/operations";
 import { getAllRecipes, getRecipeById } from "./recipes/operations";
 
-const allOperations: [typeof getAllRecipes, typeof getRecipeById] = [
+const allOperations = [
   getAllRecipes,
   getRecipeById,
+  getCategories,
+  getIngredients,
 ];
 export default allOperations;

@@ -1,5 +1,5 @@
-interface Request {
+export interface Request<T> {
   status: number;
   message: string;
-  data: object;
+  data: T;
 }

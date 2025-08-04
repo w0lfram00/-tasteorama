@@ -1,4 +1,5 @@
 import type { Recipe, User } from "../db";
+import type { Request } from "./request";
 
 export interface CreateRecipe extends Omit<Recipe, "_id"> {}
 
@@ -19,14 +20,16 @@ export interface GetAllRecipesForUser extends Pagination {
   user: User;
 }
 
-export interface GetAllRecipesFiltered extends Pagination {
-  filter?: Partial<{
+export interface FilterOptions
+  extends Partial<{
     title: string;
     category: string;
     ingredient: string;
-  }>;
+  }> {}
+
+export interface GetAllRecipesFiltered extends Pagination {
+  filter?: FilterOptions;
 }
 
-export interface GetAllRecipesResult extends Request {
-  data: { data: Recipe[]; page: number } & PaginationInfo;
-}
+export interface GetAllRecipesResult
+  extends Request<{ data: Recipe[]; page: number } & PaginationInfo> {}

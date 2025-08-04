@@ -7,3 +7,4 @@ export const selectFilterOptions = (state: StoreState) =>
   state.recipes.filterOptions;
 export const selectPaginationInfo = (state: StoreState) =>
   state.recipes.paginationInfo;
+export const selectPage = (state: StoreState) => state.recipes.page;

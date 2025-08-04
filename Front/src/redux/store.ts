@@ -10,16 +10,26 @@ import {
   REGISTER,
 } from "redux-persist";
 import { recipesReducer, type RecipesSliceState } from "./recipes/slice";
+import {
+  categoriesReducer,
+  type CategoriesSliceState,
+} from "./categories/slice";
+import {
+  ingredientsReducer,
+  type IngredientsSliceState,
+} from "./ingredients/slice";
 
-const persistConfig = {
-  key: "main",
-  storage,
-  whitelist: [""],
-};
+// const persistConfig = {
+//   key: "main",
+//   storage,
+//   whitelist: [""],
+// };
 
 export const store = configureStore({
   reducer: {
-    recipes: persistReducer(persistConfig, recipesReducer),
+    recipes: recipesReducer,
+    categories: categoriesReducer,
+    ingredients: ingredientsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -31,6 +41,8 @@ export const store = configureStore({
 
 export type StoreState = {
   recipes: RecipesSliceState;
+  categories: CategoriesSliceState;
+  ingredients: IngredientsSliceState;
 };
 
 export type AppStore = typeof store;

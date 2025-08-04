@@ -6,7 +6,7 @@ import type {
   GetAllRecipesResult,
 } from "../../interfaces/requests/recipes";
 
-const api = axios.create({ baseURL: "http://localhost:3000/api" });
+export const api = axios.create({ baseURL: "http://localhost:3000/api" });
 
 export const getAllRecipes = createAsyncThunk(
   "recipes/getAll",
@@ -24,7 +24,6 @@ export const getAllRecipes = createAsyncThunk(
         data: response.data.data,
         paginationInfo: {
           ...response.data,
-          page: undefined,
           data: undefined,
         },
       };
