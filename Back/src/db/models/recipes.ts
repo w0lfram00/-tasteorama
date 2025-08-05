@@ -40,6 +40,7 @@ const recipes = new Schema(
       {
         id: {
           type: Schema.Types.ObjectId,
+          index: true,
           ref: 'Ingredient',
           required: true,
         },

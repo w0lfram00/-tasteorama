@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 23px;
+  margin-bottom: 15px;
 
   .recipeCard {
     background: var(--light-beige);
@@ -95,31 +96,4 @@
   font-weight: 600;
   font-size: 18px;
   color: var(--white);
-}
-
-.notFound {
-  background: var(--light-beige);
-  border-radius: 16px;
-  padding: 40px 24px;
-  width: fit-content;
-  margin: 48px auto;
-
-  display: flex;
-  gap: 16px;
-  flex-direction: column;
-  align-items: center;
-
-  h3 {
-    font-weight: 600;
-    font-size: 24px;
-    text-align: center;
-    line-height: 130%;
-    width: 382px;
-  }
-  button {
-    border: 1px solid var(--black);
-    border-radius: 8px;
-    padding: 16px 166px;
-    background-color: transparent;
-  }
 }

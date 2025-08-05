@@ -5,6 +5,7 @@ import type {
   GetAllRecipesFiltered,
   GetAllRecipesResult,
 } from "../../interfaces/requests/recipes";
+import { type Request } from "../../interfaces/requests/request";
 
 export const api = axios.create({ baseURL: "http://localhost:3000/api" });
 
@@ -37,7 +38,9 @@ export const getRecipeById = createAsyncThunk(
   "recipes/getById",
   async (id: string, thunkAPI) => {
     try {
-      const response = await api.get<RecipeDetailed>("/recipes/" + id);
+      const { data: response } = await api.get<Request<RecipeDetailed>>(
+        "/recipes/" + id
+      );
       return response.data;
     } catch {
       return thunkAPI.rejectWithValue("Error");

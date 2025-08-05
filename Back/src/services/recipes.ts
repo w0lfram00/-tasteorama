@@ -26,13 +26,15 @@ export const getAllRecipesFiltered = async ({
   const skip = (page - 1) * perPage;
 
   if (!filter.title) filter.title = '';
+
   const recipesQuery = RecipesCollection.find({
     title: { $regex: filter.title, $options: 'i' },
   });
 
   if (filter?.category) recipesQuery.where('category').equals(filter.category);
-  if (filter?.ingredient)
-    await recipesQuery.where('ingredients.id').equals(filter.ingredient);
+  if (filter?.ingredient) {
+    recipesQuery.where('ingredients._id').equals(toObjId(filter.ingredient));
+  }
 
   const [recipesCount, recipes] = await Promise.all([
     RecipesCollection.find().merge(recipesQuery).countDocuments(),
@@ -51,7 +53,7 @@ export const getRecipeById = async (
 ): Promise<RecipePopulated | null> => {
   const recipe = await RecipesCollection.findById(recipeId)
     .populate<{
-      ingredients: Array<{ ingredient: Ingredient; measure: string }>;
+      ingredients: Array<{ id: Ingredient; measure: string }>;
     }>('ingredients.id')
     .exec();
 
@@ -109,8 +111,6 @@ export const addOrRemoveRecipeToSaved = async (
     );
   } else user.savedRecipes.push(recipeId);
 
-  console.log(user.savedRecipes);
-
   const result = await UsersCollection.findByIdAndUpdate(
     { _id: user._id },
     { savedRecipes: user.savedRecipes },
@@ -134,8 +134,10 @@ export const getSavedRecipes = async ({
 > => {
   const skip = (page - 1) * perPage;
 
+  console.log(user.savedRecipes);
+
   const recipesQuery = RecipesCollection.find({
-    _id: { $in: [user.savedRecipes] },
+    _id: { $in: user.savedRecipes },
   });
 
   const [recipesCount, recipes] = await Promise.all([

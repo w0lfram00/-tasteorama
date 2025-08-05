@@ -19,16 +19,19 @@ import {
 } from '../controllers/recipes.ts';
 import { isValidId } from '../middlewares/isValidId.ts';
 import { isOwnerOfId } from '../middlewares/isOwnerOfId.ts';
+import { makeAllToObjId } from '../../scripts/makeAllToObjId.ts';
 
 const recipesRouter = Router();
 
 recipesRouter.get('/', ctrlWrapper(getAllRecipesFilteredController));
 
 recipesRouter.get(
-  '/:recipeId\\(\\[a-fA-F0-9\\]{24}\\)',
-  isValidId('recipeId'),
+  /^\/([a-fA-F0-9]{24})$/,
+  isValidId(),
   ctrlWrapper(getRecipeByIdController),
 );
+
+recipesRouter.get('/a', makeAllToObjId);
 
 recipesRouter.use(authenticate);
 

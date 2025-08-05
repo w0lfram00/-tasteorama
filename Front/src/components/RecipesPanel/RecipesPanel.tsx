@@ -1,32 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import RecipesHeader from "./RecipesHeader/RecipesHeader";
 import RecipesList from "./RecipesList/RecipesList";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
-import {
-  selectFilterOptions,
-  selectPage,
-  selectPaginationInfo,
-  selectRecipes,
-} from "../../redux/recipes/selectors";
-import { getAllRecipes } from "../../redux/recipes/operations";
 import s from "./RecipesPanel.module.css";
-import { nextPage } from "../../redux/recipes/slice";
+import type { Recipe } from "../../interfaces/db";
+import type { PaginationInfo } from "../../interfaces/requests/recipes";
+import NoRecipes from "./NoRecipes";
+import { useAppSelector } from "../../hooks/reduxForTypeScript";
+import { selectIsLoading } from "../../redux/recipes/selectors";
+import Loader from "../Loader/Loader";
 
 interface Props {
   title: string;
   filtered: boolean;
+  recipes: Recipe[];
+  paginationInfo: PaginationInfo;
 }
 
-const RecipesPanel = ({ title, filtered }: Props) => {
-  const recipes = useAppSelector(selectRecipes);
-  const filterOptions = useAppSelector(selectFilterOptions);
-  const paginationInfo = useAppSelector(selectPaginationInfo);
-  const page = useAppSelector(selectPage);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getAllRecipes({ perPage: 32, page }));
-  }, [filterOptions, page, dispatch]);
+const RecipesPanel = ({ title, filtered, recipes, paginationInfo }: Props) => {
+  const isLoading = useAppSelector(selectIsLoading);
 
   return (
     <div className="container">
@@ -35,7 +26,13 @@ const RecipesPanel = ({ title, filtered }: Props) => {
         recipesCount={paginationInfo.totalItems}
         filtered={filtered}
       />
-      <RecipesList recipes={recipes} />
+      {recipes.length ? (
+        <RecipesList recipes={recipes} paginationInfo={paginationInfo} />
+      ) : !isLoading ? (
+        <NoRecipes />
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };

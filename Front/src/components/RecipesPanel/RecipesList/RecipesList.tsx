@@ -2,15 +2,23 @@ import React from "react";
 import type { Recipe } from "../../../interfaces/db";
 import RecipeItem from "./RecipeItem";
 import s from "./RecipesList.module.css";
-import { useAppDispatch } from "../../../hooks/reduxForTypeScript";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../hooks/reduxForTypeScript";
 import { nextPage, resetFilters } from "../../../redux/recipes/slice";
+import type { PaginationInfo } from "../../../interfaces/requests/recipes";
+import { selectIsLoading } from "../../../redux/recipes/selectors";
+import Loader from "../../Loader/Loader";
 
 interface Props {
   recipes: Array<Recipe>;
+  paginationInfo: PaginationInfo;
 }
 
-const RecipesList = ({ recipes }: Props) => {
+const RecipesList = ({ recipes, paginationInfo }: Props) => {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsLoading);
 
   return recipes.length ? (
     <div>
@@ -21,18 +29,21 @@ const RecipesList = ({ recipes }: Props) => {
           </li>
         ))}
       </ul>
-      <button
-        className={s.loadMore}
-        onClick={() => {
-          dispatch(nextPage());
-        }}
-      >
-        Load More
-      </button>
+      {!isLoading && paginationInfo.hasNextPage && (
+        <button
+          className={s.loadMore}
+          onClick={() => {
+            dispatch(nextPage());
+          }}
+        >
+          Load More
+        </button>
+      )}
+      {isLoading && <Loader />}
     </div>
-  ) : (
+  ) : !isLoading ? (
     <div className={s.notFound}>
-      <h3>We’re sorry! We were not able to find a match.</h3>
+      <h3>We're sorry! We were not able to find a match.</h3>
       <button
         onClick={() => {
           dispatch(resetFilters());
@@ -41,6 +52,8 @@ const RecipesList = ({ recipes }: Props) => {
         Reset search and filters
       </button>
     </div>
+  ) : (
+    <Loader />
   );
 };
 

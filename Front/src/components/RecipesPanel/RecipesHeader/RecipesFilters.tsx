@@ -26,7 +26,7 @@ const RecipesFilters = () => {
   return (
     <div className={s.filters}>
       <button className={s.reset}>Reset filters</button>
-      <CustomSelect
+      {/* <CustomSelect
         name="category"
         inputValue={filterOptions.category}
         options={categories}
@@ -35,10 +35,24 @@ const RecipesFilters = () => {
 
           dispatch(setFilterOptions({ category: e.target.value }));
         }}
-      />
+      /> */}
 
-      <input type="select" placeholder="Category" />
-      <input type="select" placeholder="Ingredient" />
+      <input
+        type="select"
+        placeholder="Category"
+        value={filterOptions.category}
+        onChange={(e) => {
+          dispatch(setFilterOptions({ category: e.target.value }));
+        }}
+      />
+      <input
+        type="select"
+        placeholder="Ingredient"
+        value={filterOptions.ingredient}
+        onChange={(e) => {
+          dispatch(setFilterOptions({ ingredient: e.target.value }));
+        }}
+      />
     </div>
   );
 };

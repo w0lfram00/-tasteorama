@@ -6,14 +6,16 @@ const MainPage = lazy(() => import("../../pages/MainPage/MainPage"));
 const RegisterPage = lazy(
   () => import("../../pages/RegisterPage/RegisterPage")
 );
+const NotFound = lazy(() => import("../../pages/NotFound/NotFound"));
 
 const SharedLayout = () => {
   return (
-    <div>
+    <div className="main">
       <Routes>
-        <Route index element={<MainPage />}></Route>
-        <Route path="/register" element={<RegisterPage />}></Route>
-        <Route path="/recipes/:recipeId" element={<RecipePage />}></Route>
+        <Route index element={<MainPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/recipes/:recipeId" element={<RecipePage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Outlet />
     </div>

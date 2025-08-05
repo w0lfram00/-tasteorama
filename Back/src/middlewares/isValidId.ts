@@ -3,11 +3,12 @@ import createHttpError from 'http-errors';
 import { isValidObjectId } from 'mongoose';
 
 export const isValidId =
-  (idName: string) =>
+  (idName?: string) =>
   async (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params[idName];
-    if (!isValidObjectId(id)) {
+    const id = idName ? req.params[idName] : req.params[0];
+    if (!id || !isValidObjectId(id)) {
       throw createHttpError(400, 'Bad request');
     }
+
     next();
   };

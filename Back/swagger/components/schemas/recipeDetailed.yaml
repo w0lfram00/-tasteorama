@@ -55,7 +55,7 @@ properties:
         - id
         - measure
       properties:
-        ingredient:
+        id:
           $ref: './ingredient.yaml'
         measure:
           description: 'Measure of how much is needed'

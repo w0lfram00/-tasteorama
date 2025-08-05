@@ -1,10 +1,10 @@
 import React from "react";
 import type { Recipe } from "../../../interfaces/db";
 import { NavLink } from "react-router-dom";
-import Flag from "../../../assets/flag.svg";
 import Clock from "../../../assets/clock.svg";
 import s from "./RecipesList.module.css";
 import trimToLength from "../../../utils/trimToLength";
+import SaveButton from "../../SaveButton/SaveButton";
 
 interface Props {
   recipe: Recipe;
@@ -31,9 +31,7 @@ const RecipeItem = ({ recipe }: Props) => {
         </p>
         <div className={s.buttons}>
           <NavLink to={`/recipes/${recipe._id}`}>Learn more</NavLink>
-          <button>
-            <img src={Flag} alt="save button" />
-          </button>
+          <SaveButton />
         </div>
       </div>
     </>

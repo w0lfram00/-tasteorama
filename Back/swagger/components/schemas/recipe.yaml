@@ -55,7 +55,7 @@ properties:
         - ingredient
         - measure
       properties:
-        ingredient:
+        id:
           description: 'Id of ingredient'
           type: string
           example: 640c2dd963a319ea671e366a

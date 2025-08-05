@@ -358,10 +358,10 @@
           },
           {
             "in": "query",
-            "name": "ingredients",
+            "name": "ingredient",
             "schema": {
               "type": "string",
-              "example": "Tuna"
+              "example": "640c2dd963a319ea671e37aa"
             }
           },
           {
@@ -509,7 +509,7 @@
                         "measure"
                       ],
                       "properties": {
-                        "ingredient": {
+                        "id": {
                           "type": "string",
                           "description": "Id of ingredient used",
                           "example": "65ca67e7ae7f10c88b598384"
@@ -1203,7 +1203,7 @@
                 "measure"
               ],
               "properties": {
-                "ingredient": {
+                "id": {
                   "description": "Id of ingredient",
                   "type": "string",
                   "example": "640c2dd963a319ea671e366a"
@@ -1306,7 +1306,7 @@
                 "measure"
               ],
               "properties": {
-                "ingredient": {
+                "id": {
                   "$ref": "#/components/schemas/ingredient"
                 },
                 "measure": {

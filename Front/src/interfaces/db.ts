@@ -28,7 +28,7 @@ export interface Recipe {
 }
 
 export interface RecipeDetailed extends Omit<Recipe, "ingredients"> {
-  ingredients: Array<{ ingredient: Ingredient; measure: string }>;
+  ingredients: Array<{ id: Ingredient; measure: string }>;
 }
 
 export interface User {

@@ -21,10 +21,10 @@ parameters:
       type: string
       example: spaghetti
   - in: query
-    name: ingredients
+    name: ingredient
     schema:
       type: string
-      example: Tuna
+      example: 640c2dd963a319ea671e37aa
   - in: query
     name: category
     schema:
