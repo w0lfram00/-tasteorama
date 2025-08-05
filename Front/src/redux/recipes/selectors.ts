@@ -9,3 +9,4 @@ export const selectPaginationInfo = (state: StoreState) =>
   state.recipes.paginationInfo;
 export const selectPage = (state: StoreState) => state.recipes.page;
 export const selectIsLoading = (state: StoreState) => state.recipes.isLoading;
+export const selectError = (state: StoreState) => state.recipes.error;

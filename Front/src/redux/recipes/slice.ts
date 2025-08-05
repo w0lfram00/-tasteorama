@@ -6,6 +6,7 @@ import type {
 } from "../../interfaces/requests/recipes";
 import { getAllRecipes, getRecipeById } from "./operations";
 import selectForAllOperationsStatus from "../../utils/selectForAllOperationsStatus";
+import type { RequestError } from "../../interfaces/requests/errors";
 
 export interface RecipesSliceState {
   recipes: Array<Recipe>;
@@ -14,7 +15,7 @@ export interface RecipesSliceState {
   paginationInfo: PaginationInfo;
   filterOptions: FilterOptions;
   isLoading: boolean;
-  isError: unknown | null;
+  error: RequestError | null;
 }
 
 const initialState: RecipesSliceState = {
@@ -29,7 +30,7 @@ const initialState: RecipesSliceState = {
   },
   filterOptions: {},
   isLoading: false,
-  isError: null,
+  error: null,
 };
 
 const slice = createSlice({
@@ -50,6 +51,9 @@ const slice = createSlice({
     },
     setFilterOptions: (state, action: PayloadAction<FilterOptions>) => {
       state.filterOptions = { ...state.filterOptions, ...action.payload };
+    },
+    resetError: (state) => {
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -77,8 +81,10 @@ const slice = createSlice({
       )
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("rejected")),
-        (state) => {
-          state.isError = true;
+        (state, action) => {
+          console.log(action.payload);
+
+          state.error = action.payload as RequestError;
           state.isLoading = false;
         }
       );
@@ -92,4 +98,5 @@ export const {
   resetFilters,
   resetRecipes,
   setFilterOptions,
+  resetError,
 } = slice.actions;

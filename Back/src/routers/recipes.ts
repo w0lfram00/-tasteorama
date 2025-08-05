@@ -11,27 +11,14 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.ts';
 import {
   addOrRemoveRecipeToSavedController,
   deleteRecipeController,
-  getAllRecipesFilteredController,
   getOwnedRecipesController,
-  getRecipeByIdController,
   getSavedRecipesController,
   postRecipeController,
 } from '../controllers/recipes.ts';
 import { isValidId } from '../middlewares/isValidId.ts';
 import { isOwnerOfId } from '../middlewares/isOwnerOfId.ts';
-import { makeAllToObjId } from '../../scripts/makeAllToObjId.ts';
 
 const recipesRouter = Router();
-
-recipesRouter.get('/', ctrlWrapper(getAllRecipesFilteredController));
-
-recipesRouter.get(
-  /^\/([a-fA-F0-9]{24})$/,
-  isValidId(),
-  ctrlWrapper(getRecipeByIdController),
-);
-
-recipesRouter.get('/a', makeAllToObjId);
 
 recipesRouter.use(authenticate);
 

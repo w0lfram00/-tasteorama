@@ -31,7 +31,7 @@ export const getAllRecipesFilteredController = async (
 };
 
 export const getRecipeByIdController = async (req: Request, res: Response) => {
-  const recipeId = toObjId(req.params[0]);
+  const recipeId = toObjId(req.params.recipeId);
   const recipe = await getRecipeById(recipeId);
 
   if (!recipe) throw createHttpError(404, 'Recipe not found');

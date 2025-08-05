@@ -25,6 +25,7 @@ const MainPage = () => {
   }, [dispatch, page]);
 
   const onSubmit = (filter: FilterOptions) => {
+    dispatch(resetRecipes());
     dispatch(setFilterOptions(filter));
     dispatch(getAllRecipes({ perPage: 32, page, filter: filterOptions }));
   };

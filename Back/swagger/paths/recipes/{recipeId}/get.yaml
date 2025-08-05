@@ -31,5 +31,7 @@ responses:
               example: Successfully found recipe!
             data:
               $ref: ../../../components/schemas/recipeDetailed.yaml
+  '400':
+    $ref: '../../../components/responses/400.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'

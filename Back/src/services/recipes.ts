@@ -16,7 +16,6 @@ import type {
 import createHttpError from 'http-errors';
 import type { PaginationData } from '../interfaces/PaginationData.ts';
 import { toObjId } from '../utils/toObjId.ts';
-import { log } from 'console';
 
 export const getAllRecipesFiltered = async ({
   filter,
@@ -33,7 +32,7 @@ export const getAllRecipesFiltered = async ({
 
   if (filter?.category) recipesQuery.where('category').equals(filter.category);
   if (filter?.ingredient) {
-    recipesQuery.where('ingredients._id').equals(toObjId(filter.ingredient));
+    recipesQuery.where('ingredients.id').equals(toObjId(filter.ingredient));
   }
 
   const [recipesCount, recipes] = await Promise.all([

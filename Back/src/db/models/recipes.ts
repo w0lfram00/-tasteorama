@@ -33,7 +33,7 @@ const recipes = new Schema(
       type: String,
     },
     time: {
-      type: String,
+      type: Number,
       required: true,
     },
     ingredients: [

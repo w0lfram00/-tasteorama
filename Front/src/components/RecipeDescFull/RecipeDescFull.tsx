@@ -14,8 +14,8 @@ const RecipeDescFull = ({ recipe }: Props) => {
       <h3>Ingredients:</h3>
       <ul>
         {recipe.ingredients.map((el) => (
-          <li>
-            {el.ingredient.name} — {el.measure}
+          <li key={el.id._id}>
+            {el.id.name} — {el.measure}
           </li>
         ))}
       </ul>

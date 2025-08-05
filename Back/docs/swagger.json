@@ -322,7 +322,7 @@
         }
       }
     },
-    "/recipes": {
+    "/recipes/public": {
       "get": {
         "tags": [
           "Recipes"
@@ -444,7 +444,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/recipes": {
       "post": {
         "tags": [
           "Recipes"
@@ -561,7 +563,7 @@
         }
       }
     },
-    "/recipes/{recipeId}": {
+    "/recipes/public/{recipeId}": {
       "get": {
         "tags": [
           "Recipes"
@@ -610,11 +612,16 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
           "404": {
             "$ref": "#/components/responses/404"
           }
         }
-      },
+      }
+    },
+    "/recipes/{recipeId}": {
       "delete": {
         "tags": [
           "Recipes"
@@ -641,6 +648,9 @@
         "responses": {
           "204": {
             "description": "Deleted recipe with id"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -1373,6 +1383,43 @@
       }
     },
     "responses": {
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Bad request"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "401": {
         "description": "Unauthorized error",
         "content": {

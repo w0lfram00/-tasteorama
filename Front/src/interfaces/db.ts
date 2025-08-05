@@ -23,7 +23,7 @@ export interface Recipe {
   description: string;
   thumb: string;
   img?: string | null;
-  time: string;
+  time: number;
   ingredients: Array<{ id: string; measure: string }>;
 }
 

@@ -33,14 +33,16 @@ paths:
   /auth/logout:
     post:
       $ref: '../swagger/paths/auth/logout.yaml'
-  /recipes:
+  /recipes/public:
     get:
       $ref: '../swagger/paths/recipes/get.yaml'
+  /recipes:
     post:
       $ref: '../swagger/paths/recipes/post.yaml'
-  /recipes/{recipeId}:
+  /recipes/public/{recipeId}:
     get:
       $ref: '../swagger/paths/recipes/{recipeId}/get.yaml'
+  /recipes/{recipeId}:
     delete:
       $ref: '../swagger/paths/recipes/{recipeId}/delete.yaml'
   /recipes/owned:
