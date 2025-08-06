@@ -1,0 +1,42 @@
+.generalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .info {
+    background: var(--light-beige);
+    padding: 24px;
+    width: 373px;
+    border-radius: 16px;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+
+    font-weight: 400;
+    font-size: 16px;
+
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    span {
+      font-weight: 600;
+    }
+  }
+
+  button {
+    border-radius: 8px;
+    background: var(--light-brown);
+    padding: 16px 144px;
+
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    color: var(--white);
+    svg {
+      stroke: var(--white);
+    }
+  }
+}

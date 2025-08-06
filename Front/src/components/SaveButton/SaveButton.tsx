@@ -1,10 +1,15 @@
 import React from "react";
-import Flag from "../../assets/flag.svg";
+import Flag from "./Flag";
 
-const SaveButton = () => {
+interface Props {
+  text?: string;
+}
+
+const SaveButton = ({ text }: Props) => {
   return (
     <button>
-      <img src={Flag} alt="save button" />
+      {text}
+      <Flag />
     </button>
   );
 };

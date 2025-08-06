@@ -13,6 +13,7 @@ import RecipeDescFull from "../../components/RecipeDescFull/RecipeDescFull";
 import Loader from "../../components/Loader/Loader";
 import approximateCookTime from "../../utils/approximateCookTime";
 import { resetError } from "../../redux/recipes/slice";
+import RecipeGeneralInfo from "../../components/RecipeGeneralInfo/recipeGeneralInfo";
 
 const RecipePage = () => {
   const dispatch = useAppDispatch();
@@ -37,29 +38,18 @@ const RecipePage = () => {
   return isLoading ? (
     <Loader />
   ) : recipe ? (
-    <div>
-      <h2>{recipe.title}</h2>
-      <div>
-        <img
-          src={recipe.img || recipe.thumb}
-          alt={`image of ${recipe.title}`}
-        />
-      </div>
-      <div className={s.content}>
-        <RecipeDescFull recipe={recipe} />
-        <div className={s.interaction}>
-          <div className={s.shortInfo}>
-            <h3>General information</h3>
-            <div>
-              <span>Category: </span>
-              {recipe.category}
-            </div>
-            <div>
-              <span>Cooking time: </span>
-              {approximateCookTime(recipe.time)}
-            </div>
-          </div>
-          <SaveButton />
+    <div className="container">
+      <div className={s.recipe}>
+        <h2>{recipe.title}</h2>
+        <div className={s.imgContainer}>
+          <img
+            src={recipe.img || recipe.thumb}
+            alt={`image of ${recipe.title}`}
+          />
+        </div>
+        <div className={s.content}>
+          <RecipeDescFull recipe={recipe} />
+          <RecipeGeneralInfo recipe={recipe} />
         </div>
       </div>
     </div>

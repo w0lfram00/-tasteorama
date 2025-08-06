@@ -7,6 +7,7 @@ import type {
 import { getAllRecipes, getRecipeById } from "./operations";
 import selectForAllOperationsStatus from "../../utils/selectForAllOperationsStatus";
 import type { RequestError } from "../../interfaces/requests/errors";
+import trimRequestType from "../../utils/trimRequestType";
 
 export interface RecipesSliceState {
   recipes: Array<Recipe>;
@@ -15,6 +16,7 @@ export interface RecipesSliceState {
   paginationInfo: PaginationInfo;
   filterOptions: FilterOptions;
   isLoading: boolean;
+  loadingMap: Record<string, boolean>;
   error: RequestError | null;
 }
 
@@ -30,6 +32,7 @@ const initialState: RecipesSliceState = {
   },
   filterOptions: {},
   isLoading: false,
+  loadingMap: {},
   error: null,
 };
 
@@ -69,23 +72,25 @@ const slice = createSlice({
       })
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("pending")),
-        (state) => {
+        (state, action) => {
+          state.loadingMap[trimRequestType(action.type)] = true;
           state.isLoading = true;
         }
       )
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("fulfilled")),
-        (state) => {
-          state.isLoading = false;
+        (state, action) => {
+          console.log(action.type);
+          delete state.loadingMap[trimRequestType(action.type)];
+          state.isLoading = Object.keys(state.loadingMap).length > 0;
         }
       )
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("rejected")),
         (state, action) => {
-          console.log(action.payload);
-
           state.error = action.payload as RequestError;
-          state.isLoading = false;
+          delete state.loadingMap[trimRequestType(action.type)];
+          state.isLoading = Object.keys(state.loadingMap).length > 0;
         }
       );
   },

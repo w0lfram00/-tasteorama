@@ -9,18 +9,25 @@ interface Props {
 const RecipeDescFull = ({ recipe }: Props) => {
   return (
     <div className={s.desc}>
-      <h3>About recipe</h3>
-      <p>{recipe.description}</p>
-      <h3>Ingredients:</h3>
-      <ul>
-        {recipe.ingredients.map((el) => (
-          <li key={el.id._id}>
-            {el.id.name} — {el.measure}
-          </li>
-        ))}
-      </ul>
-      <h3>Preparation Steps:</h3>
-      <p>{recipe.instructions}</p>
+      <div className={s.section}>
+        <h3>About recipe</h3>
+        <p>{recipe.description}</p>
+      </div>
+      <div className={s.section}>
+        <h3>Ingredients:</h3>
+
+        <ul>
+          {recipe.ingredients.map((el) => (
+            <li key={el.id._id}>
+              {el.id.name} — {el.measure}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={s.section}>
+        <h3>Preparation Steps:</h3>
+        <p>{recipe.instructions}</p>
+      </div>
     </div>
   );
 };

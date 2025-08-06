@@ -3,7 +3,10 @@ import RecipesHeader from "./RecipesHeader/RecipesHeader";
 import RecipesList from "./RecipesList/RecipesList";
 import s from "./RecipesPanel.module.css";
 import type { Recipe } from "../../interfaces/db";
-import type { PaginationInfo } from "../../interfaces/requests/recipes";
+import type {
+  FilterOptions,
+  PaginationInfo,
+} from "../../interfaces/requests/recipes";
 import NoRecipes from "./NoRecipes";
 import { useAppSelector } from "../../hooks/reduxForTypeScript";
 import { selectIsLoading } from "../../redux/recipes/selectors";
@@ -14,14 +17,27 @@ interface Props {
   filtered: boolean;
   recipes: Recipe[];
   paginationInfo: PaginationInfo;
+  filterOptions: FilterOptions;
 }
 
-const RecipesPanel = ({ title, filtered, recipes, paginationInfo }: Props) => {
+const RecipesPanel = ({
+  title,
+  filtered,
+  recipes,
+  paginationInfo,
+  filterOptions,
+}: Props) => {
   const isLoading = useAppSelector(selectIsLoading);
 
   return (
     <div className="container">
-      {title ? <h2 className={s.title}>{title}</h2> : undefined}
+      {title ? (
+        <h2 className={s.title}>
+          {filterOptions.title
+            ? `Search Results for "${filterOptions.title}"`
+            : title}
+        </h2>
+      ) : undefined}
       <RecipesHeader
         recipesCount={paginationInfo.totalItems}
         filtered={filtered}

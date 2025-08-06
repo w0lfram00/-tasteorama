@@ -1,0 +1,29 @@
+.desc {
+  .section {
+    margin-bottom: 40px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 155%;
+
+    h3 {
+      font-weight: 600;
+      font-size: 32px;
+
+      margin-bottom: 12px;
+    }
+
+    ul {
+      margin-left: 18px;
+      list-style: disc;
+      line-height: 255%;
+    }
+  }
+  .section:last-of-type {
+    margin-bottom: 0;
+
+    h3 {
+      margin-bottom: 26px;
+    }
+  }
+}
