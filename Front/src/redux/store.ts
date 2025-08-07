@@ -18,6 +18,7 @@ import {
   ingredientsReducer,
   type IngredientsSliceState,
 } from "./ingredients/slice";
+import { authReducer, type AuthSliceState } from "./auth/slice";
 
 // const persistConfig = {
 //   key: "main",
@@ -30,6 +31,7 @@ export const store = configureStore({
     recipes: recipesReducer,
     categories: categoriesReducer,
     ingredients: ingredientsReducer,
+    auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -43,6 +45,7 @@ export type StoreState = {
   recipes: RecipesSliceState;
   categories: CategoriesSliceState;
   ingredients: IngredientsSliceState;
+  auth: AuthSliceState;
 };
 
 export type AppStore = typeof store;

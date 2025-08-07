@@ -31,7 +31,7 @@ const RecipePage = () => {
   useEffect(() => {
     if (error?.status == 400) navigate("/not-round");
     return () => {
-      dispatch(resetError());
+      if (error) dispatch(resetError());
     };
   }, [error, dispatch]);
 

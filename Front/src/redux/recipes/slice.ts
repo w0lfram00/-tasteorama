@@ -4,7 +4,13 @@ import type {
   FilterOptions,
   PaginationInfo,
 } from "../../interfaces/requests/recipes";
-import { getAllRecipes, getRecipeById } from "./operations";
+import {
+  deleteRecipeById,
+  getAllRecipes,
+  getOwnedRecipes,
+  getRecipeById,
+  getSavedRecipes,
+} from "./operations";
 import selectForAllOperationsStatus from "../../utils/selectForAllOperationsStatus";
 import type { RequestError } from "../../interfaces/requests/errors";
 import trimRequestType from "../../utils/trimRequestType";
@@ -62,14 +68,25 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllRecipes.fulfilled, (state, action) => {
-        state.paginationInfo = action.payload.paginationInfo;
-        if (state.page != 1)
-          state.recipes = state.recipes.concat(action.payload.data);
-        else state.recipes = action.payload.data;
+        fillRecipeState(state, action.payload);
       })
       .addCase(getRecipeById.fulfilled, (state, action) => {
         state.selectedRecipe = action.payload;
       })
+      .addCase(deleteRecipeById.fulfilled, (state, action) => {
+        state.recipes = state.recipes.filter(
+          (recipe) => recipe._id != action.payload
+        );
+      })
+      .addCase(getSavedRecipes.fulfilled, (state, action) => {
+        fillRecipeState(state, action.payload);
+      })
+      .addCase(getOwnedRecipes.fulfilled, (state, action) => {
+        fillRecipeState(state, action.payload);
+      })
+      // .addCase(postRecipe.fulfilled, (state, action) => {
+      //   state.selectedRecipe = action.payload
+      // })
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("pending")),
         (state, action) => {
@@ -80,7 +97,6 @@ const slice = createSlice({
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("fulfilled")),
         (state, action) => {
-          console.log(action.type);
           delete state.loadingMap[trimRequestType(action.type)];
           state.isLoading = Object.keys(state.loadingMap).length > 0;
         }
@@ -105,3 +121,12 @@ export const {
   setFilterOptions,
   resetError,
 } = slice.actions;
+
+function fillRecipeState(
+  state: RecipesSliceState,
+  payload: { data: Recipe[]; paginationInfo: PaginationInfo }
+) {
+  state.paginationInfo = payload.paginationInfo;
+  if (state.page != 1) state.recipes = state.recipes.concat(payload.data);
+  else state.recipes = payload.data;
+}

@@ -1,11 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import type { RecipeDetailed } from "../../interfaces/db";
+import type { Recipe, RecipeDetailed, User } from "../../interfaces/db";
 import type {
+  CreateRecipe,
   GetAllRecipesFiltered,
   GetAllRecipesResult,
 } from "../../interfaces/requests/recipes";
 import { type Request } from "../../interfaces/requests/request";
+import errorHandling from "../../utils/errorHandling";
 
 export const api = axios.create({ baseURL: "http://localhost:3000/api" });
 
@@ -13,28 +15,26 @@ export const getAllRecipes = createAsyncThunk(
   "recipes/getAll",
   async (options: GetAllRecipesFiltered, thunkAPI) => {
     try {
-      const response = await api.get<GetAllRecipesResult>("/recipes/public", {
-        params: {
-          ...options.filter,
-          page: options.page,
-          perPage: options.perPage,
-        },
-      });
-      const result = response.data;
+      const { data: response } = await api.get<GetAllRecipesResult>(
+        "/recipes/public",
+        {
+          params: {
+            ...options.filter,
+            page: options.page,
+            perPage: options.perPage,
+          },
+        }
+      );
 
       return {
-        data: result.data.data,
+        data: response.data.data,
         paginationInfo: {
-          ...result.data,
+          ...response.data,
           data: undefined,
         },
       };
     } catch (e) {
-      if (axios.isAxiosError(e))
-        return thunkAPI.rejectWithValue({
-          status: e.status,
-          message: e.response?.data.message,
-        });
+      if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);
       return thunkAPI.rejectWithValue({
         status: 500,
         message: "Unexpected Error",
@@ -47,17 +47,131 @@ export const getRecipeById = createAsyncThunk(
   "recipes/getById",
   async (id: string, thunkAPI) => {
     try {
-      const response = await api.get<Request<RecipeDetailed>>(
+      const { data: response } = await api.get<Request<RecipeDetailed>>(
         "/recipes/public/" + id
       );
-      const result = response.data;
-      return result.data;
+      return response.data;
     } catch (e) {
       if (axios.isAxiosError(e))
-        return thunkAPI.rejectWithValue({
-          status: e.status,
-          message: e.response?.data.message,
-        });
+        if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);
+      return thunkAPI.rejectWithValue({
+        status: 500,
+        message: "Unexpected Error",
+      });
+    }
+  }
+);
+
+export const deleteRecipeById = createAsyncThunk(
+  "recipes/delete",
+  async (id: string, thunkAPI) => {
+    try {
+      await api.delete("/recipes/" + id);
+      return id;
+    } catch (e) {
+      if (axios.isAxiosError(e))
+        if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);
+      return thunkAPI.rejectWithValue({
+        status: 500,
+        message: "Unexpected Error",
+      });
+    }
+  }
+);
+
+export const saveRecipe = createAsyncThunk(
+  "recipes/save",
+  async (id: string, thunkAPI) => {
+    try {
+      const { data: response } = await api.patch<Request<User>>(
+        "/recipes/save/" + id
+      );
+      return response.data;
+    } catch (e) {
+      if (axios.isAxiosError(e))
+        if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);
+      return thunkAPI.rejectWithValue({
+        status: 500,
+        message: "Unexpected Error",
+      });
+    }
+  }
+);
+
+export const postRecipe = createAsyncThunk(
+  "recipes/create",
+  async (payload: CreateRecipe, thunkAPI) => {
+    try {
+      const { data: response } = await api.post<Request<Recipe>>(
+        "/recipes",
+        payload
+      );
+      return response.data;
+    } catch (e) {
+      if (axios.isAxiosError(e))
+        if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);
+      return thunkAPI.rejectWithValue({
+        status: 500,
+        message: "Unexpected Error",
+      });
+    }
+  }
+);
+
+export const getOwnedRecipes = createAsyncThunk(
+  "recipes/getOwned",
+  async (options: { page: number; perPage: number }, thunkAPI) => {
+    try {
+      const { data: response } = await api.get<GetAllRecipesResult>(
+        "/recipes/owned",
+        {
+          params: {
+            page: options.page,
+            perPage: options.perPage,
+          },
+        }
+      );
+
+      return {
+        data: response.data.data,
+        paginationInfo: {
+          ...response.data,
+          data: undefined,
+        },
+      };
+    } catch (e) {
+      if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);
+      return thunkAPI.rejectWithValue({
+        status: 500,
+        message: "Unexpected Error",
+      });
+    }
+  }
+);
+
+export const getSavedRecipes = createAsyncThunk(
+  "recipes/getSaved",
+  async (options: { page: number; perPage: number }, thunkAPI) => {
+    try {
+      const { data: response } = await api.get<GetAllRecipesResult>(
+        "/recipes/saved",
+        {
+          params: {
+            page: options.page,
+            perPage: options.perPage,
+          },
+        }
+      );
+
+      return {
+        data: response.data.data,
+        paginationInfo: {
+          ...response.data,
+          data: undefined,
+        },
+      };
+    } catch (e) {
+      if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);
       return thunkAPI.rejectWithValue({
         status: 500,
         message: "Unexpected Error",
