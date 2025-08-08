@@ -1,10 +1,10 @@
-import { Field, Form, Formik } from "formik";
-import React, { useEffect } from "react";
+import { Form, Formik } from "formik";
+import React from "react";
 import s from "./SearchPanel.module.css";
 import type { FilterOptions } from "../../interfaces/requests/recipes";
 import { useAppSelector } from "../../hooks/reduxForTypeScript";
 import { selectFilterOptions } from "../../redux/recipes/selectors";
-import TitleInput from "./titleInput";
+import TitleInput from "./TitleInput";
 
 interface Props {
   onSubmit: (filterOptions: FilterOptions) => void;
