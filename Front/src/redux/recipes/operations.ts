@@ -8,8 +8,7 @@ import type {
 } from "../../interfaces/requests/recipes";
 import { type Request } from "../../interfaces/requests/request";
 import errorHandling from "../../utils/errorHandling";
-
-export const api = axios.create({ baseURL: "http://localhost:3000/api" });
+import api from "../apiCore";
 
 export const getAllRecipes = createAsyncThunk(
   "recipes/getAll",
@@ -83,10 +82,10 @@ export const saveRecipe = createAsyncThunk(
   "recipes/save",
   async (id: string, thunkAPI) => {
     try {
-      const { data: response } = await api.patch<Request<User>>(
-        "/recipes/save/" + id
-      );
-      return response.data;
+      const { data: response } = await api.patch<
+        Request<{ data: User; addedRecipe: boolean }>
+      >("/recipes/saved/" + id);
+      return response.data.data;
     } catch (e) {
       if (axios.isAxiosError(e))
         if (axios.isAxiosError(e)) return errorHandling(e, thunkAPI);

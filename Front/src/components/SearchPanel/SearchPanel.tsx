@@ -30,7 +30,9 @@ const SearchPanel = ({ onSubmit }: Props) => {
         >
           <Form>
             <TitleInput filterOptions={filterOptions} />
-            <button type="submit">Search</button>
+            <button type="submit" className="buttonGeneric">
+              Search
+            </button>
           </Form>
         </Formik>
       </div>

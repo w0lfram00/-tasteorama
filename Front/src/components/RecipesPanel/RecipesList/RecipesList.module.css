@@ -80,9 +80,15 @@
           padding: 8px;
           background-color: transparent;
           stroke: var(--black);
-
-          * {
-          }
+        }
+        button.checked {
+          background: var(--light-brown);
+          stroke: var(--white);
+          border-color: transparent;
+        }
+        button.delete {
+          background: var(--red);
+          border-color: transparent;
         }
       }
     }

@@ -8,19 +8,23 @@ import {
   selectIsLoggedIn,
   selectIsRefreshing,
 } from "../../redux/auth/selectors";
+import { selectLoadingMap } from "../../redux/recipes/selectors";
 
 const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const isRefreshing = useAppSelector(selectIsRefreshing);
+  const { ["user/getInfo"]: isLoading } = useAppSelector(selectLoadingMap);
 
-  return !isRefreshing ? (
+  return (
     <header className={s.header}>
-      <div className="container">
-        <Logo />
-        <nav>{isLoggedIn ? <NavUser /> : <NavGuest />}</nav>
-      </div>
+      {!isRefreshing && !isLoading ? (
+        <div className="container">
+          <Logo />
+          <nav>{isLoggedIn ? <NavUser /> : <NavGuest />}</nav>
+        </div>
+      ) : undefined}
     </header>
-  ) : undefined;
+  );
 };
 
 export default Header;

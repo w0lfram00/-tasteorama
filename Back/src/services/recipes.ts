@@ -101,7 +101,6 @@ export const addOrRemoveRecipeToSaved = async (
 
   checkRecipeId(recipeId);
   let addedRecipe = true;
-  console.log(user.savedRecipes);
 
   if (isRecipeSaved(user, recipeId)) {
     addedRecipe = false;

@@ -1,6 +1,6 @@
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, type Reducer } from "@reduxjs/toolkit";
 import {
   FLUSH,
   REHYDRATE,
@@ -19,19 +19,20 @@ import {
   type IngredientsSliceState,
 } from "./ingredients/slice";
 import { authReducer, type AuthSliceState } from "./auth/slice";
+import "./axiosInstances";
 
-// const persistConfig = {
-//   key: "main",
-//   storage,
-//   whitelist: [""],
-// };
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  whitelist: ["accessToken, user"],
+};
 
 export const store = configureStore({
   reducer: {
     recipes: recipesReducer,
     categories: categoriesReducer,
     ingredients: ingredientsReducer,
-    auth: authReducer,
+    auth: persistReducer(authPersistConfig, authReducer) as Reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

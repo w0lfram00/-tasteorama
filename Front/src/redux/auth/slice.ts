@@ -1,10 +1,14 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { loginUser, logoutUser, refreshUser, registerUser } from "./operations";
-import type { User } from "../../interfaces/db";
-import { saveRecipe } from "../recipes/operations";
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  getCurUserInfo,
+  loginUser,
+  logoutUser,
+  refreshUser,
+} from "./operations";
+import type { UserDetailed } from "../../interfaces/db";
 
 export interface AuthSliceState {
-  user: User | null;
+  user: UserDetailed | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
   accessToken: string | null;
@@ -14,7 +18,7 @@ const initialState: AuthSliceState = {
   user: null,
   isLoggedIn: false,
   accessToken: null,
-  isRefreshing: false,
+  isRefreshing: true,
 };
 
 const slice = createSlice({
@@ -23,31 +27,33 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-      })
       .addCase(loginUser.pending, (state) => {
         state.isRefreshing = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.accessToken = action.payload;
-        state.isRefreshing = false;
+        state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(loginUser.rejected, (state) => {
+        state.isRefreshing = false;
       })
       .addCase(logoutUser.pending, () => {
-        return initialState;
+        return { ...initialState, isRefreshing: false };
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.accessToken = action.payload;
-        state.isRefreshing = false;
+        state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
       })
-      .addCase(saveRecipe.fulfilled, (state, action) => {
-        if (state.user) state.user.savedRecipes = action.payload.savedRecipes;
-        else state.user = action.payload;
+      .addCase(refreshUser.rejected, () => {
+        return { ...initialState, isRefreshing: false };
+      })
+      .addCase(getCurUserInfo.fulfilled, (state, action) => {
+        state.user = action.payload;
       });
   },
 });

@@ -26,17 +26,22 @@
   }
 
   button {
-    border-radius: 8px;
-    background: var(--light-brown);
-    padding: 16px 144px;
+    width: 373px;
 
     display: flex;
     gap: 16px;
     align-items: center;
+    justify-content: center;
 
-    color: var(--white);
+    font-weight: 600;
+    font-size: 18px;
+
     svg {
       stroke: var(--white);
     }
+  }
+
+  button.checked svg {
+    fill: var(--white);
   }
 }

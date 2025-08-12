@@ -17,7 +17,7 @@ const RegisterPage = () => {
     passwordRepeat: "",
   };
 
-  const onSubmit = (
+  const onSubmit = async (
     values: typeof initialValues,
     action: FormikHelpers<typeof initialValues>
   ) => {
@@ -26,7 +26,9 @@ const RegisterPage = () => {
       return;
     }
 
-    dispatch(registerUser(values));
+    delete (values as any).passwordRepeat;
+
+    await dispatch(registerUser(values)).unwrap();
     action.resetForm();
     navigate("/login");
   };

@@ -34,13 +34,10 @@
       background: var(--white);
     }
     button {
-      color: var(--white);
       font-weight: 600;
       font-size: 16px;
 
-      border-radius: 8px;
       padding: 13px 66px;
-      background: var(--light-brown);
     }
   }
 }

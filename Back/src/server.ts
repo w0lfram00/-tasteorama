@@ -16,7 +16,12 @@ export const setupServer = () => {
   const app = express();
 
   app.use(express.json());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: getEnvVar('FRONTEND_URL'),
+      credentials: true,
+    }),
+  );
   app.use(cookieParser());
   app.use('/api/api-docs', swaggerDocs());
 

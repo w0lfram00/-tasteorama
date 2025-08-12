@@ -14,9 +14,10 @@ import Loader from "../../Loader/Loader";
 interface Props {
   recipes: Array<Recipe>;
   paginationInfo: PaginationInfo;
+  deleteButton: boolean;
 }
 
-const RecipesList = ({ recipes, paginationInfo }: Props) => {
+const RecipesList = ({ recipes, paginationInfo, deleteButton }: Props) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
 
@@ -25,7 +26,7 @@ const RecipesList = ({ recipes, paginationInfo }: Props) => {
       <ul className={s.recipeList}>
         {recipes.map((recipe) => (
           <li className={s.recipeCard} key={recipe._id}>
-            <RecipeItem recipe={recipe} />
+            <RecipeItem recipe={recipe} deleteButton={deleteButton} />
           </li>
         ))}
       </ul>

@@ -1,5 +1,10 @@
 import React, { lazy } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
+import RestrictedRoute from "../RestrictedRoute/RestrictedRoute";
+import ProfilePage from "../../pages/ProfilePage/ProfilePage";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import OwnedRecipesPanel from "../OwnedRecipesPanel/OwnedRecipesPanel";
+import SavedRecipesPanel from "../SavedRecipesPanel/SavedRecipesPanel";
 
 const RecipePage = lazy(() => import("../../pages/RecipePage/RecipePage"));
 const MainPage = lazy(() => import("../../pages/MainPage/MainPage"));
@@ -14,9 +19,34 @@ const SharedLayout = () => {
     <div className="main">
       <Routes>
         <Route index element={<MainPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute>
+              <RegisterPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute>
+              <LoginPage />
+            </RestrictedRoute>
+          }
+        />
         <Route path="/recipes/:recipeId" element={<RecipePage />} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          }
+        >
+          <Route path="own" element={<OwnedRecipesPanel />} />
+          <Route path="saved" element={<SavedRecipesPanel />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Outlet />

@@ -35,7 +35,10 @@ export const loginUserController = async (req: Request, res: Response) => {
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
-    data: { accessToken: session.accessToken },
+    data: {
+      accessToken: session.accessToken,
+      userId: session.userId,
+    },
   });
 };
 
@@ -64,6 +67,7 @@ export const refreshUsersSessionController = async (
     message: 'Successfully refreshed a session!',
     data: {
       accessToken: session.accessToken,
+      userId: session.userId,
     },
   });
 };

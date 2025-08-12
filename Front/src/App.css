@@ -5,6 +5,7 @@
 
   .main {
     flex-grow: 1;
+    padding-top: 74px;
   }
 }
 

@@ -1,0 +1,31 @@
+.profile {
+  padding-top: 46px;
+  h2 {
+    font-weight: 600;
+    font-size: 40px;
+
+    padding-bottom: 16px;
+  }
+
+  .navLinks {
+    font-weight: 600;
+    font-size: 12px;
+
+    display: flex;
+    gap: 38px;
+
+    .activeLink {
+      position: relative;
+    }
+
+    .activeLink::after {
+      position: absolute;
+      content: "";
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      width: 100%;
+      background-color: var(--black);
+    }
+  }
+}

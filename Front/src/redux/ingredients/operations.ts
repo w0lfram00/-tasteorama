@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../recipes/operations";
 import type { GetIngredients } from "../../interfaces/requests/ingredients";
 import axios from "axios";
 import errorHandling from "../../utils/errorHandling";
+import api from "../apiCore";
 
 export const getIngredients = createAsyncThunk(
   "ingredients/getAll",

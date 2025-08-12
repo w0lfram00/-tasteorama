@@ -13,11 +13,12 @@ import { selectIsLoading } from "../../redux/recipes/selectors";
 import Loader from "../Loader/Loader";
 
 interface Props {
-  title: string;
+  title?: string;
   filtered: boolean;
+  deleteButton?: boolean;
   recipes: Recipe[];
   paginationInfo: PaginationInfo;
-  filterOptions: FilterOptions;
+  filterOptions?: FilterOptions;
 }
 
 const RecipesPanel = ({
@@ -26,14 +27,15 @@ const RecipesPanel = ({
   recipes,
   paginationInfo,
   filterOptions,
+  deleteButton = false,
 }: Props) => {
   const isLoading = useAppSelector(selectIsLoading);
 
   return (
-    <div className="container">
+    <div>
       {title ? (
         <h2 className={s.title}>
-          {filterOptions.title
+          {filterOptions?.title
             ? `Search Results for "${filterOptions.title}"`
             : title}
         </h2>
@@ -43,7 +45,11 @@ const RecipesPanel = ({
         filtered={filtered}
       />
       {recipes.length ? (
-        <RecipesList recipes={recipes} paginationInfo={paginationInfo} />
+        <RecipesList
+          recipes={recipes}
+          paginationInfo={paginationInfo}
+          deleteButton={deleteButton}
+        />
       ) : !isLoading ? (
         <NoRecipes />
       ) : (

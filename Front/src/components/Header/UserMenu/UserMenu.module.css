@@ -11,14 +11,12 @@
     span {
       border-radius: 32px;
       background: var(--light-brown);
-      padding: 5px 12px;
+      width: 32px;
+      height: 32px;
 
       display: flex;
-      place-items: center;
-
-      p {
-        display: block;
-      }
+      justify-content: center;
+      align-items: center;
     }
   }
 

@@ -27,6 +27,7 @@ export default tseslint.config([
       ],
       "no-restricted-imports": "off",
       "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-restricted-imports": [
         "warn",
         {

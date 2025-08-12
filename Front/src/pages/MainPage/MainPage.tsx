@@ -39,13 +39,15 @@ const MainPage = () => {
   return (
     <>
       <SearchPanel onSubmit={onSubmit} />
-      <RecipesPanel
-        title="Recipes"
-        filtered={true}
-        recipes={recipes}
-        paginationInfo={paginationInfo}
-        filterOptions={filterOptions}
-      />
+      <div className="container">
+        <RecipesPanel
+          title="Recipes"
+          filtered={true}
+          recipes={recipes}
+          paginationInfo={paginationInfo}
+          filterOptions={filterOptions}
+        />
+      </div>
     </>
   );
 };

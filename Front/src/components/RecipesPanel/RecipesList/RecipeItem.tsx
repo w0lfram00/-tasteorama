@@ -5,12 +5,19 @@ import Clock from "../../../assets/clock.svg";
 import s from "./RecipesList.module.css";
 import trimToLength from "../../../utils/trimToLength";
 import SaveButton from "../../SaveButton/SaveButton";
+import clsx from "clsx";
+import { useAppSelector } from "../../../hooks/reduxForTypeScript";
+import { selectSavedRecipes } from "../../../redux/recipes/selectors";
+import DeleteButton from "../../DeleteButton/DeleteButton";
 
 interface Props {
   recipe: Recipe;
+  deleteButton: boolean;
 }
 
-const RecipeItem = ({ recipe }: Props) => {
+const RecipeItem = ({ recipe, deleteButton }: Props) => {
+  const savedRecipes = useAppSelector(selectSavedRecipes);
+
   return (
     <>
       <img
@@ -31,7 +38,16 @@ const RecipeItem = ({ recipe }: Props) => {
         </p>
         <div className={s.buttons}>
           <NavLink to={`/recipes/${recipe._id}`}>Learn more</NavLink>
-          <SaveButton />
+          {deleteButton ? (
+            <DeleteButton recipeId={recipe._id} />
+          ) : (
+            <SaveButton
+              className={clsx(
+                savedRecipes?.some((id) => id == recipe._id) && s.checked
+              )}
+              recipeId={recipe._id}
+            />
+          )}
         </div>
       </div>
     </>

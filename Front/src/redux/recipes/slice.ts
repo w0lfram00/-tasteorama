@@ -10,14 +10,17 @@ import {
   getOwnedRecipes,
   getRecipeById,
   getSavedRecipes,
+  saveRecipe,
 } from "./operations";
 import selectForAllOperationsStatus from "../../utils/selectForAllOperationsStatus";
 import type { RequestError } from "../../interfaces/requests/errors";
 import trimRequestType from "../../utils/trimRequestType";
+import { getCurUserInfo, logoutUser } from "../auth/operations";
 
 export interface RecipesSliceState {
   recipes: Array<Recipe>;
   selectedRecipe: RecipeDetailed | null;
+  savedRecipes: string[];
   page: number;
   paginationInfo: PaginationInfo;
   filterOptions: FilterOptions;
@@ -29,6 +32,7 @@ export interface RecipesSliceState {
 const initialState: RecipesSliceState = {
   recipes: [],
   selectedRecipe: null,
+  savedRecipes: [],
   page: 1,
   paginationInfo: {
     totalItems: 0,
@@ -83,6 +87,17 @@ const slice = createSlice({
       })
       .addCase(getOwnedRecipes.fulfilled, (state, action) => {
         fillRecipeState(state, action.payload);
+      })
+      .addCase(saveRecipe.fulfilled, (state, action) => {
+        state.savedRecipes = action.payload.savedRecipes;
+      })
+      .addCase(getCurUserInfo.fulfilled, (state, action) => {
+        state.savedRecipes = action.payload.savedRecipes.map(
+          (recipe) => recipe._id
+        );
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.savedRecipes = [];
       })
       // .addCase(postRecipe.fulfilled, (state, action) => {
       //   state.selectedRecipe = action.payload
