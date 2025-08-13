@@ -1,0 +1,15 @@
+.recipeForm {
+  display: flex;
+
+  .generalHalf {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    .category {
+      width: 400px;
+    }
+  }
+  .photoHalf {
+  }
+}

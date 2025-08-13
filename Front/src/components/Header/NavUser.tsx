@@ -18,7 +18,7 @@ const NavUser = () => {
       >
         My Profile
       </NavLink>
-      <NavLink className={s.button} to="/recipes/create">
+      <NavLink className={s.button} to="/add-recipe">
         Add Recipe
       </NavLink>
       <UserMenu />

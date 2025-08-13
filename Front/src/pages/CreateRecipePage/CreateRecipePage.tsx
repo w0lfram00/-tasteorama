@@ -1,7 +1,12 @@
-import React from "react";
+import CreateRecipeForm from "../../components/CreateRecipeForm/CreateRecipeForm";
 
-const CreateRecipe = () => {
-  return <div>CreateRecipe</div>;
+const CreateRecipePage = () => {
+  return (
+    <div className="container">
+      <h2>Add Recipe</h2>
+      <CreateRecipeForm />
+    </div>
+  );
 };
 
-export default CreateRecipe;
+export default CreateRecipePage;

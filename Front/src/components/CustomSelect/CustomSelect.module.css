@@ -1,0 +1,45 @@
+.selectContainer {
+  position: relative;
+
+  input {
+    border: 1px solid var(--light-gray);
+    background: var(--white);
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+  }
+  input::placeholder {
+    color: var(--gray);
+  }
+  .arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    transform: rotateX(180deg) translateY(50%);
+  }
+  input:focus ~ .arrow {
+    transform: rotateX(0deg) translateY(-50%);
+  }
+  .selection {
+    position: absolute;
+    background: var(--white);
+    width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
+    visibility: hidden;
+
+    li {
+      padding: 5px 15px;
+      cursor: pointer;
+    }
+    li:hover {
+      background-color: var(--light-gray);
+    }
+  }
+  input:focus ~ .selection {
+    visibility: visible;
+  }
+}

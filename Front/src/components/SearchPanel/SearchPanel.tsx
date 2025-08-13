@@ -23,8 +23,7 @@ const SearchPanel = ({ onSubmit }: Props) => {
         <h1>Plan, Cook, and Share Your Flavor</h1>
         <Formik
           initialValues={initialValues}
-          onSubmit={(values, action) => {
-            action.resetForm();
+          onSubmit={(values) => {
             onSubmit({ ...filterOptions, ...values });
           }}
         >

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CustomSelect from "../../CustomSelect/CustomSelect";
 import s from "./RecipesHeader.module.css";
 import {
@@ -26,31 +26,29 @@ const RecipesFilters = () => {
   return (
     <div className={s.filters}>
       <button className={s.reset}>Reset filters</button>
-      {/* <CustomSelect
+
+      <CustomSelect
         name="category"
-        inputValue={filterOptions.category}
         options={categories}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-          console.log(1);
-
-          dispatch(setFilterOptions({ category: e.target.value }));
+        onChange={(value: { name: string; _id: string }) => {
+          dispatch(setFilterOptions({ category: value.name }));
         }}
-      /> */}
-
-      <input
-        type="select"
-        placeholder="Category"
-        value={filterOptions.category}
-        onChange={(e) => {
-          dispatch(setFilterOptions({ category: e.target.value }));
+        fontsClass={s.selectFonts}
+        inputClass={s.select}
+        resetFunc={() => {
+          dispatch(setFilterOptions({ category: "" }));
         }}
       />
-      <input
-        type="select"
-        placeholder="Ingredient"
-        value={filterOptions.ingredient}
-        onChange={(e) => {
-          dispatch(setFilterOptions({ ingredient: e.target.value }));
+      <CustomSelect
+        name="ingredient"
+        options={ingredients}
+        onChange={(value: { name: string; _id: string }) => {
+          dispatch(setFilterOptions({ ingredient: value._id }));
+        }}
+        fontsClass={s.selectFonts}
+        inputClass={s.select}
+        resetFunc={() => {
+          dispatch(setFilterOptions({ ingredient: "" }));
         }}
       />
     </div>

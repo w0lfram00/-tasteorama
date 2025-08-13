@@ -5,6 +5,7 @@ import ProfilePage from "../../pages/ProfilePage/ProfilePage";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import OwnedRecipesPanel from "../OwnedRecipesPanel/OwnedRecipesPanel";
 import SavedRecipesPanel from "../SavedRecipesPanel/SavedRecipesPanel";
+import CreateRecipePage from "../../pages/CreateRecipePage/CreateRecipePage";
 
 const RecipePage = lazy(() => import("../../pages/RecipePage/RecipePage"));
 const MainPage = lazy(() => import("../../pages/MainPage/MainPage"));
@@ -33,6 +34,14 @@ const SharedLayout = () => {
             <RestrictedRoute>
               <LoginPage />
             </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/add-recipe"
+          element={
+            <PrivateRoute>
+              <CreateRecipePage />
+            </PrivateRoute>
           }
         />
         <Route path="/recipes/:recipeId" element={<RecipePage />} />

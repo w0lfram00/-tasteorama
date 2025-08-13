@@ -1,63 +1,55 @@
-import React, { useState } from "react";
+import React from "react";
 import type { Category, Ingredient } from "../../interfaces/db";
 import Arrow from "../../assets/arrow-down.svg";
 import s from "./CustomSelect.module.css";
 import clsx from "clsx";
 import capitalize from "../../utils/capitalize";
+import { Field, useFormikContext } from "formik";
 
 interface Props {
   name: "category" | "ingredient";
+  inputValue?: string | undefined;
   options: Category[] | Ingredient[];
-  onChange: (value: { name: string; _id: string }) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   fontsClass?: string;
   inputClass: string;
-  resetFunc: () => void;
 }
 
-const CustomSelect = ({
+interface Context {
+  category: string;
+  ingredient: string;
+}
+
+const CustomSelectField = ({
   name,
   options,
   fontsClass,
   inputClass,
-  onChange,
-  resetFunc,
 }: Props) => {
-  const [query, setQuery] = useState<string>("");
+  const { values } = useFormikContext<Context>();
+  if (!values[name]) values[name] = "";
 
   return (
     <div className={clsx(s.selectContainer, fontsClass)}>
-      <input
-        className={inputClass}
+      <Field
         type="text"
         name={name}
-        onChange={(e) => setQuery(e.target.value)}
-        value={query}
         autoComplete="off"
         placeholder={capitalize(name)}
-        onFocus={() => {
-          setQuery("");
-          resetFunc();
-        }}
-        onBlur={() => {
-          setQuery("");
-          resetFunc();
-        }}
+        className={inputClass}
       />
       <img className={s.arrow} src={Arrow} alt="arrow" />
       <ul className={s.selection}>
         {options
           .filter((option) =>
-            option.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+            option.name.toLocaleLowerCase().includes(values[name])
           )
           .map((option) => (
             <li
               key={option._id}
               value={option.name}
               onMouseDown={() => {
-                setTimeout(() => {
-                  setQuery(option.name);
-                  onChange(option);
-                }, 0);
+                values[name] = option.name;
               }}
             >
               {option.name}
@@ -68,4 +60,4 @@ const CustomSelect = ({
   );
 };
 
-export default CustomSelect;
+export default CustomSelectField;
