@@ -1,15 +1,81 @@
 .recipeForm {
   display: flex;
+  gap: 24px;
+
+  h3 {
+    font-weight: 600;
+    font-size: 32px;
+  }
 
   .generalHalf {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    flex-grow: 1;
+    gap: 72px;
 
-    .category {
-      width: 400px;
+    .fields {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    .field {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      h3 {
+        margin-bottom: 32px;
+      }
+    }
+
+    input,
+    textarea {
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    textarea {
+      resize: none;
+      height: 144px;
+      width: 100%;
+    }
+    .categoryFonts {
+      font-weight: 400;
+      font-size: 18px;
+    }
+    .categoryInput {
+      width: 100%;
+      border-radius: 8px;
+      padding: 12px;
     }
   }
   .photoHalf {
+    width: 391px;
+
+    h3 {
+      padding-bottom: 32px;
+    }
+
+    .photoContainer {
+      width: 100%;
+      height: 374px;
+      border-radius: 16px;
+      background: var(--gray-3);
+      padding: 100px;
+
+      display: flex;
+      place-content: center;
+
+      cursor: pointer;
+
+      input {
+        display: none;
+      }
+    }
   }
 }

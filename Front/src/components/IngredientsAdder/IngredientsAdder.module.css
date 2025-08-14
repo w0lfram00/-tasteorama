@@ -1,0 +1,56 @@
+.ingredientsAdder {
+  width: 100%;
+
+  .adder {
+    .fields {
+      display: flex;
+      gap: 24px;
+      padding-bottom: 17px;
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .name {
+        flex-grow: 0.7;
+      }
+      .amount {
+        flex-grow: 0.3;
+      }
+    }
+
+    button {
+      display: block;
+      margin-left: auto;
+
+      width: 258px;
+      border-radius: 8px;
+      padding: 4px 8px;
+
+      font-weight: 600;
+      font-size: 12px;
+    }
+  }
+
+  .list {
+    text-align: left;
+    border-collapse: collapse;
+
+    tr {
+      border-bottom: 1px solid var(--light-gray-3);
+    }
+    .nameCol {
+      min-width: 280px;
+      padding-right: 28px;
+    }
+    .measureCol {
+      min-width: 140px;
+    }
+    button {
+      background-color: transparent;
+      margin-top: 4px;
+    }
+  }
+}

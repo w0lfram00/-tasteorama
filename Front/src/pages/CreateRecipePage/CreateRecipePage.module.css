@@ -1,0 +1,11 @@
+.createPage {
+  padding-top: 48px;
+  padding-bottom: 48px;
+
+  h2 {
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 110%;
+    margin-bottom: 40px;
+  }
+}

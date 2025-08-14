@@ -11,7 +11,7 @@ const Footer = () => {
         <p>© 2025 CookingCompanion. All rights reserved.</p>
         <nav>
           <NavLink to="/">Recipes</NavLink>
-          <NavLink to="/login">Account</NavLink>
+          <NavLink to="/profile/own">Account</NavLink>
         </nav>
       </div>
     </footer>

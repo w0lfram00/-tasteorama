@@ -10,8 +10,8 @@ interface Props {
   options: Category[] | Ingredient[];
   onChange: (value: { name: string; _id: string }) => void;
   fontsClass?: string;
-  inputClass: string;
-  resetFunc: () => void;
+  inputClass?: string;
+  resetFunc?: () => void;
 }
 
 const CustomSelect = ({
@@ -29,18 +29,17 @@ const CustomSelect = ({
       <input
         className={inputClass}
         type="text"
-        name={name}
         onChange={(e) => setQuery(e.target.value)}
         value={query}
         autoComplete="off"
         placeholder={capitalize(name)}
         onFocus={() => {
           setQuery("");
-          resetFunc();
+          if (resetFunc) resetFunc();
         }}
         onBlur={() => {
           setQuery("");
-          resetFunc();
+          if (resetFunc) resetFunc();
         }}
       />
       <img className={s.arrow} src={Arrow} alt="arrow" />

@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { Recipe, RecipeDetailed, User } from "../../interfaces/db";
 import type {
-  CreateRecipe,
   GetAllRecipesFiltered,
   GetAllRecipesResult,
 } from "../../interfaces/requests/recipes";
@@ -99,7 +98,7 @@ export const saveRecipe = createAsyncThunk(
 
 export const postRecipe = createAsyncThunk(
   "recipes/create",
-  async (payload: CreateRecipe, thunkAPI) => {
+  async (payload: FormData, thunkAPI) => {
     try {
       const { data: response } = await api.post<Request<Recipe>>(
         "/recipes",
