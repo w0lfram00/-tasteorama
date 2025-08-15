@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
 import { useAppDispatch } from "./hooks/reduxForTypeScript";
 import { refreshUser } from "./redux/auth/operations";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ function App() {
       <Header />
       <SharedLayout />
       <Footer />
+      <ToastContainer />
     </>
   );
 }

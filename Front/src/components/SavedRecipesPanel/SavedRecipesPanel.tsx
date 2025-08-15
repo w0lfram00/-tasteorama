@@ -16,7 +16,7 @@ const SavedRecipesPanel = () => {
   const page = useAppSelector(selectPage);
 
   useEffect(() => {
-    resetRecipes();
+    dispatch(resetRecipes());
     dispatch(getSavedRecipes({ page: page, perPage: 32 }));
   }, [page]);
 

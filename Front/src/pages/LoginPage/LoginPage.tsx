@@ -6,6 +6,7 @@ import type { FormikHelpers } from "formik";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
 import { loginUser } from "../../redux/auth/operations";
 import { selectUser } from "../../redux/auth/selectors";
+import successToast from "../../utils/toasts/successToast";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,10 @@ const LoginPage = () => {
     values: typeof initialValues,
     action: FormikHelpers<typeof initialValues>
   ) => {
-    dispatch(loginUser(values));
+    const result = await dispatch(loginUser(values));
+    successToast("Logged in successfully!");
+    console.log(1);
+
     action.resetForm();
   };
 

@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../hooks/reduxForTypeScript";
 import { registerUser } from "../../redux/auth/operations";
 import { NavLink, useNavigate } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
+import successToast from "../../utils/toasts/successToast";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -29,8 +30,7 @@ const RegisterPage = () => {
     delete (values as any).passwordRepeat;
 
     await dispatch(registerUser(values)).unwrap();
-    action.resetForm();
-    navigate("/login");
+    successToast("Registered successfully");
   };
 
   return (

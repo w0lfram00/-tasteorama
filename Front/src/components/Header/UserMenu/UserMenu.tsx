@@ -7,6 +7,7 @@ import {
 } from "../../../hooks/reduxForTypeScript";
 import { logoutUser } from "../../../redux/auth/operations";
 import { selectUser } from "../../../redux/auth/selectors";
+import successToast from "../../../utils/toasts/successToast";
 
 const UserMenu = () => {
   const user = useAppSelector(selectUser);
@@ -20,6 +21,7 @@ const UserMenu = () => {
       </div>
       <button
         onClick={() => {
+          successToast("You logged out of your account");
           dispatch(logoutUser());
         }}
       >

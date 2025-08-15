@@ -3,6 +3,7 @@ import s from "./IngredientsAdder.module.css";
 import type { Ingredient } from "../../interfaces/db";
 import IngredientItem from "./IngredientItem";
 import CustomSelect from "../CustomSelect/CustomSelect";
+import errorToast from "../../utils/toasts/errorToast";
 
 interface Props {
   ingredients: Ingredient[];
@@ -47,14 +48,18 @@ const IngredientsAdder = ({
           type="button"
           className="buttonGeneric"
           onClick={() => {
-            if (
-              selectedIngr &&
-              measure &&
-              !addedIngredients.some((ingr) => ingr.id._id == selectedIngr._id)
-            ) {
-              addIngrFunc({ id: selectedIngr, measure: measure });
-              setMeasure("");
+            if (!selectedIngr || !measure) {
+              errorToast("Fill both fields for ingredient");
+              return;
             }
+            if (
+              addedIngredients.some((ingr) => ingr.id._id == selectedIngr._id)
+            ) {
+              errorToast("You already added this ingredient");
+              return;
+            }
+            addIngrFunc({ id: selectedIngr, measure: measure });
+            setMeasure("");
           }}
         >
           Add new Ingredient

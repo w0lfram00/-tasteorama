@@ -100,19 +100,6 @@ const slice = createSlice({
       .addCase(logoutUser.pending, (state) => {
         state.savedRecipes = [];
       })
-      // .addCase(postRecipe.fulfilled, (state, action) => {
-      //   state.selectedRecipe = action.payload
-      // })
-      .addMatcher(
-        isAnyOf(
-          getAllRecipes.pending,
-          getOwnedRecipes.pending,
-          getSavedRecipes.pending
-        ),
-        (state) => {
-          state.recipes = [];
-        }
-      )
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("pending")),
         (state, action) => {

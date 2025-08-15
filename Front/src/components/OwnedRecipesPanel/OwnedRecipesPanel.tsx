@@ -16,7 +16,7 @@ const OwnedRecipesPanel = () => {
   const page = useAppSelector(selectPage);
 
   useEffect(() => {
-    resetRecipes();
+    dispatch(resetRecipes());
     dispatch(getOwnedRecipes({ page: page, perPage: 32 }));
   }, [page]);
 

@@ -1,5 +1,7 @@
 .desc {
   overflow: hidden;
+  flex-grow: 1;
+
   .section {
     margin-bottom: 40px;
 
@@ -25,6 +27,9 @@
 
     h3 {
       margin-bottom: 26px;
+    }
+    p {
+      white-space: pre-wrap;
     }
   }
 }

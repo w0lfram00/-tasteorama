@@ -14,6 +14,8 @@ import { postRecipe } from "../../redux/recipes/operations";
 import createRecipeValidation from "../../validation/createRecipeValidation";
 import { useNavigate } from "react-router-dom";
 import { selectIsLoading } from "../../redux/recipes/selectors";
+import successToast from "../../utils/toasts/successToast";
+import errorToast from "../../utils/toasts/errorToast";
 
 const CreateRecipeForm = () => {
   const navigate = useNavigate();
@@ -42,9 +44,11 @@ const CreateRecipeForm = () => {
 
   const onSubmit = async (values: any) => {
     if (!file) {
+      errorToast("Please, provide image of completed meal");
       return;
     }
     if (!addedIngredients.length) {
+      errorToast("Please, add ingredients needed");
       return;
     }
 
@@ -57,6 +61,7 @@ const CreateRecipeForm = () => {
     formdata.append("thumb", file);
     formdata.append("ingredients", JSON.stringify(addedIngredients));
     const recipe = await dispatch(postRecipe(formdata)).unwrap();
+    if (recipe) successToast("Created recipe successfully!");
     navigate("/recipes/" + recipe._id);
   };
 

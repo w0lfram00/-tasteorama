@@ -20,7 +20,7 @@ const MainPage = () => {
   const page = useAppSelector(selectPage);
 
   useEffect(() => {
-    resetRecipes();
+    dispatch(resetRecipes());
     dispatch(getAllRecipes({ perPage: 32, page, filter: filterOptions }));
   }, [dispatch, page]);
 
