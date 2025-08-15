@@ -7,8 +7,6 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 import { swaggerDocs } from './middlewares/swaggerDocs.ts';
-import type { NextFunction, Request, Response } from 'express';
-import { makeAllToObjId } from '../scripts/makeAllToObjId.ts';
 
 const PORT = +getEnvVar('PORT');
 
