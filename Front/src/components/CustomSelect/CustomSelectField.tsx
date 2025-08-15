@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { Category, Ingredient } from "../../interfaces/db";
 import Arrow from "../../assets/arrow-down.svg";
 import s from "./CustomSelect.module.css";

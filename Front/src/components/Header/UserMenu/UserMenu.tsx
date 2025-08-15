@@ -1,4 +1,3 @@
-import React from "react";
 import Logout from "../../../assets/logout.svg";
 import s from "./UserMenu.module.css";
 import {

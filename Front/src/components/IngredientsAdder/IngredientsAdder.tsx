@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import s from "./IngredientsAdder.module.css";
 import type { Ingredient } from "../../interfaces/db";
 import IngredientItem from "./IngredientItem";

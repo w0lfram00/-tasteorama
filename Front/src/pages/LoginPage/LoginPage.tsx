@@ -25,9 +25,8 @@ const LoginPage = () => {
     values: typeof initialValues,
     action: FormikHelpers<typeof initialValues>
   ) => {
-    const result = await dispatch(loginUser(values));
+    await dispatch(loginUser(values));
     successToast("Logged in successfully!");
-    console.log(1);
 
     action.resetForm();
   };
