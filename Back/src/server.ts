@@ -23,13 +23,13 @@ export const setupServer = () => {
   app.use(cookieParser());
   app.use('/api/api-docs', swaggerDocs());
 
-  // app.use(
-  //   pinoHttp({
-  //     transport: {
-  //       target: 'pino-pretty',
-  //     },
-  //   }),
-  // );
+  app.use(
+    pinoHttp({
+      transport: {
+        target: 'pino-pretty',
+      },
+    }),
+  );
 
   app.use('/api', router);
 
