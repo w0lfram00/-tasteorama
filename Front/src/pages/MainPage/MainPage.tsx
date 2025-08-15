@@ -9,8 +9,7 @@ import {
   selectRecipes,
 } from "../../redux/recipes/selectors";
 import { getAllRecipes } from "../../redux/recipes/operations";
-import type { FilterOptions } from "../../interfaces/requests/recipes";
-import { resetRecipes, setFilterOptions } from "../../redux/recipes/slice";
+import { useSearchParams } from "react-router-dom";
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
@@ -18,27 +17,28 @@ const MainPage = () => {
   const paginationInfo = useAppSelector(selectPaginationInfo);
   const filterOptions = useAppSelector(selectFilterOptions);
   const page = useAppSelector(selectPage);
+  const [searchParams] = useSearchParams();
+
+  const getSearchParams = () => {
+    const title = searchParams.get("title") || undefined;
+    const category = searchParams.get("category") || undefined;
+    const ingredient = searchParams.get("ingredient") || undefined;
+    return { title, category, ingredient };
+  };
 
   useEffect(() => {
-    dispatch(resetRecipes());
-    dispatch(getAllRecipes({ perPage: 32, page, filter: filterOptions }));
-  }, [dispatch, page]);
-
-  const onSubmit = (filter: FilterOptions) => {
-    dispatch(resetRecipes());
-    dispatch(setFilterOptions(filter));
     dispatch(
       getAllRecipes({
         perPage: 32,
         page,
-        filter: { ...filterOptions, title: filter.title },
+        filter: getSearchParams(),
       })
     );
-  };
+  }, [page, searchParams]);
 
   return (
     <>
-      <SearchPanel onSubmit={onSubmit} />
+      <SearchPanel />
       <div className="container">
         <RecipesPanel
           title="Recipes"

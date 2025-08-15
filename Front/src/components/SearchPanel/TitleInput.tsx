@@ -1,18 +1,7 @@
-import { Field, useFormikContext } from "formik";
-import { useEffect } from "react";
-import type { FilterOptions } from "../../interfaces/requests/recipes";
+import { Field } from "formik";
 
-interface Props {
-  filterOptions: FilterOptions;
-}
-
-const TitleInput = ({ filterOptions }: Props) => {
-  const { setFieldValue } = useFormikContext();
-
-  useEffect(() => {
-    if (!filterOptions.title) setFieldValue("title", "");
-  }, [filterOptions.title]);
-
+const TitleInput = () => {
+  // const { setFieldValue } = useFormikContext();
   return <Field type="text" name="title" placeholder="Dish's Title" />;
 };
 

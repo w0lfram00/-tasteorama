@@ -1,19 +1,14 @@
 import { Form, Formik } from "formik";
 import s from "./SearchPanel.module.css";
-import type { FilterOptions } from "../../interfaces/requests/recipes";
-import { useAppSelector } from "../../hooks/reduxForTypeScript";
-import { selectFilterOptions } from "../../redux/recipes/selectors";
 import TitleInput from "./TitleInput";
+import { useSearchParams } from "react-router-dom";
+import updateSearchParams from "../../utils/updateSearchParams";
 
-interface Props {
-  onSubmit: (filterOptions: FilterOptions) => void;
-}
-
-const SearchPanel = ({ onSubmit }: Props) => {
-  const filterOptions = useAppSelector(selectFilterOptions);
+const SearchPanel = () => {
+  const [searchParams] = useSearchParams();
 
   const initialValues = {
-    title: "",
+    title: searchParams.get("title"),
   };
 
   return (
@@ -23,11 +18,11 @@ const SearchPanel = ({ onSubmit }: Props) => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            onSubmit({ ...filterOptions, ...values });
+            updateSearchParams("title", values.title);
           }}
         >
           <Form>
-            <TitleInput filterOptions={filterOptions} />
+            <TitleInput />
             <button type="submit" className="buttonGeneric">
               Search
             </button>

@@ -9,7 +9,7 @@ import { selectCategories } from "../../../redux/categories/selectors";
 import { selectIngredients } from "../../../redux/ingredients/selectors";
 import { getCategories } from "../../../redux/categories/operations";
 import { getIngredients } from "../../../redux/ingredients/operations";
-import { resetFilters, setFilterOptions } from "../../../redux/recipes/slice";
+import updateSearchParams from "../../../utils/updateSearchParams";
 
 const RecipesFilters = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,6 @@ const RecipesFilters = () => {
   const [clear, setClear] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(setFilterOptions({}));
     dispatch(getCategories());
     dispatch(getIngredients());
   }, []);
@@ -28,7 +27,6 @@ const RecipesFilters = () => {
       <button
         className={s.reset}
         onClick={() => {
-          dispatch(resetFilters());
           setClear((prev) => !prev);
         }}
       >
@@ -39,12 +37,12 @@ const RecipesFilters = () => {
         name="category"
         options={categories}
         onChange={(value: { name: string; _id: string }) => {
-          dispatch(setFilterOptions({ category: value.name }));
+          updateSearchParams("category", value.name);
         }}
         fontsClass={s.selectFonts}
         inputClass={s.select}
         resetFunc={() => {
-          dispatch(setFilterOptions({ category: "" }));
+          updateSearchParams("category", "");
         }}
         clearTrigger={clear}
       />
@@ -52,12 +50,12 @@ const RecipesFilters = () => {
         name="ingredient"
         options={ingredients}
         onChange={(value: { name: string; _id: string }) => {
-          dispatch(setFilterOptions({ ingredient: value._id }));
+          updateSearchParams("ingredient", value._id);
         }}
         fontsClass={s.selectFonts}
         inputClass={s.select}
         resetFunc={() => {
-          dispatch(setFilterOptions({ ingredient: "" }));
+          updateSearchParams("ingredient", "");
         }}
       />
     </div>
