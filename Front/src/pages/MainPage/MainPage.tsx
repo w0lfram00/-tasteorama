@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SearchPanel from "../../components/SearchPanel/SearchPanel";
 import RecipesPanel from "../../components/RecipesPanel/RecipesPanel";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
@@ -10,6 +10,7 @@ import {
 } from "../../redux/recipes/selectors";
 import { getAllRecipes } from "../../redux/recipes/operations";
 import { useSearchParams } from "react-router-dom";
+import type { FilterOptions } from "../../interfaces/requests/recipes";
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
@@ -18,29 +19,28 @@ const MainPage = () => {
   const filterOptions = useAppSelector(selectFilterOptions);
   const page = useAppSelector(selectPage);
   const [searchParams] = useSearchParams();
+  const [query, setQuery] = useState<FilterOptions>({});
 
   const getSearchParams = () => {
     const title = searchParams.get("title") || undefined;
     const category = searchParams.get("category") || undefined;
     const ingredient = searchParams.get("ingredient") || undefined;
-    return { title, category, ingredient };
+    setQuery({ title, category, ingredient });
   };
 
-  const submit = useCallback(() => {
-    console.log(getSearchParams());
-
+  const submit = () => {
     dispatch(
       getAllRecipes({
         perPage: 32,
         page,
-        filter: getSearchParams(),
+        filter: query,
       })
     );
-  }, [searchParams, page]);
+  };
 
   useEffect(() => {
     submit();
-  }, [page, searchParams]);
+  }, [page, query]);
 
   return (
     <>
