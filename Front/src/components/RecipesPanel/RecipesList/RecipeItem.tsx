@@ -39,7 +39,7 @@ const RecipeItem = ({ recipe, deleteButton }: Props) => {
         <div className={s.buttons}>
           <NavLink to={`/recipes/${recipe._id}`}>Learn more</NavLink>
           {deleteButton ? (
-            <DeleteButton recipeId={recipe._id} />
+            <DeleteButton recipeId={recipe._id} className={s.delete} />
           ) : (
             <SaveButton
               className={clsx(

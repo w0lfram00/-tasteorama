@@ -1,4 +1,5 @@
 .desc {
+  overflow: hidden;
   .section {
     margin-bottom: 40px;
 

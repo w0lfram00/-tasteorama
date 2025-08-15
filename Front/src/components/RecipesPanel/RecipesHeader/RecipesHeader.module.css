@@ -30,12 +30,12 @@
       font-weight: 400;
       font-size: 16px;
       line-height: 155%;
+      width: 179px;
     }
     .select {
       background: var(--white);
       border-radius: 4px;
       padding: 4px 8px;
-      width: 179px;
       height: 33px;
     }
   }

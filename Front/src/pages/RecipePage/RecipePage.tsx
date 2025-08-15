@@ -5,15 +5,13 @@ import {
   selectIsLoading,
   selectSelectedRecipe,
 } from "../../redux/recipes/selectors";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getRecipeById } from "../../redux/recipes/operations";
 import s from "./RecipePage.module.css";
-import SaveButton from "../../components/SaveButton/SaveButton";
 import RecipeDescFull from "../../components/RecipeDescFull/RecipeDescFull";
 import Loader from "../../components/Loader/Loader";
-import approximateCookTime from "../../utils/approximateCookTime";
 import { resetError } from "../../redux/recipes/slice";
-import RecipeGeneralInfo from "../../components/RecipeGeneralInfo/recipeGeneralInfo";
+import RecipeGeneralInfo from "../../components/RecipeGeneralInfo/RecipeGeneralInfo";
 
 const RecipePage = () => {
   const dispatch = useAppDispatch();

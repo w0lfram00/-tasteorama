@@ -25,6 +25,7 @@ const OwnedRecipesPanel = () => {
       recipes={recipes}
       paginationInfo={paginationInfo}
       filtered={false}
+      deleteButton={true}
     />
   );
 };

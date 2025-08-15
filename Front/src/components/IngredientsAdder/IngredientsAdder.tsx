@@ -44,6 +44,7 @@ const IngredientsAdder = ({
           </label>
         </div>
         <button
+          type="button"
           className="buttonGeneric"
           onClick={() => {
             if (

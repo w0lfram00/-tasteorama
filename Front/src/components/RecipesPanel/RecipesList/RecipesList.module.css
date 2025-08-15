@@ -12,6 +12,7 @@
     display: flex;
     gap: 16px;
     flex-direction: column;
+    overflow: hidden;
 
     > img {
       border-radius: 16px;

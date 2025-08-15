@@ -81,6 +81,7 @@ const slice = createSlice({
         state.recipes = state.recipes.filter(
           (recipe) => recipe._id != action.payload
         );
+        state.paginationInfo.totalItems -= 1;
       })
       .addCase(getSavedRecipes.fulfilled, (state, action) => {
         fillRecipeState(state, action.payload);
@@ -102,6 +103,16 @@ const slice = createSlice({
       // .addCase(postRecipe.fulfilled, (state, action) => {
       //   state.selectedRecipe = action.payload
       // })
+      .addMatcher(
+        isAnyOf(
+          getAllRecipes.pending,
+          getOwnedRecipes.pending,
+          getSavedRecipes.pending
+        ),
+        (state) => {
+          state.recipes = [];
+        }
+      )
       .addMatcher(
         isAnyOf(...selectForAllOperationsStatus("pending")),
         (state, action) => {
