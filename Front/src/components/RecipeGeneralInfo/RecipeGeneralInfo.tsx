@@ -1,10 +1,10 @@
-import s from "./recipeGeneralInfo.module.css";
 import approximateCookTime from "../../utils/approximateCookTime";
 import type { RecipeDetailed } from "../../interfaces/db";
 import SaveButton from "../SaveButton/SaveButton";
 import clsx from "clsx";
 import { useAppSelector } from "../../hooks/reduxForTypeScript";
 import { selectSavedRecipes } from "../../redux/recipes/selectors";
+import s from "./RecipeGeneralInfo.module.css";
 
 interface Props {
   recipe: RecipeDetailed;
