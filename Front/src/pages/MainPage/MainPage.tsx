@@ -39,7 +39,7 @@ const MainPage = () => {
   };
   useEffect(() => {
     submit();
-  }, [page, searchParams]);
+  }, [page, searchParams, submit]);
 
   return (
     <>
