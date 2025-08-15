@@ -1,4 +1,3 @@
-import React from "react";
 import type { Recipe } from "../../../interfaces/db";
 import { NavLink } from "react-router-dom";
 import Clock from "../../../assets/clock.svg";

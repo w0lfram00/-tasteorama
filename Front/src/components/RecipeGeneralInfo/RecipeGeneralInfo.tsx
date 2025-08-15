@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./recipeGeneralInfo.module.css";
 import approximateCookTime from "../../utils/approximateCookTime";
 import type { RecipeDetailed } from "../../interfaces/db";

@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./ScreenLoader.module.css";
 import { PuffLoader } from "react-spinners";
 

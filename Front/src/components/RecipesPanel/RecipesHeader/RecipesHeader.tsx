@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./RecipesHeader.module.css";
 import RecipesFilters from "./RecipesFilters";
 

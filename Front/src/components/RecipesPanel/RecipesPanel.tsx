@@ -1,4 +1,3 @@
-import React from "react";
 import RecipesHeader from "./RecipesHeader/RecipesHeader";
 import RecipesList from "./RecipesList/RecipesList";
 import s from "./RecipesPanel.module.css";

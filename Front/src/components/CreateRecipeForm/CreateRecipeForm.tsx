@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
 import { selectCategories } from "../../redux/categories/selectors";
 import { selectIngredients } from "../../redux/ingredients/selectors";

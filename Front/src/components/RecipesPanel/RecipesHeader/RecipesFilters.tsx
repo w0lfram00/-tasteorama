@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import CustomSelect from "../../CustomSelect/CustomSelect";
 import s from "./RecipesHeader.module.css";
 import {
@@ -10,13 +10,11 @@ import { selectIngredients } from "../../../redux/ingredients/selectors";
 import { getCategories } from "../../../redux/categories/operations";
 import { getIngredients } from "../../../redux/ingredients/operations";
 import { setFilterOptions } from "../../../redux/recipes/slice";
-import { selectFilterOptions } from "../../../redux/recipes/selectors";
 
 const RecipesFilters = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
   const ingredients = useAppSelector(selectIngredients);
-  const filterOptions = useAppSelector(selectFilterOptions);
 
   useEffect(() => {
     dispatch(getCategories());

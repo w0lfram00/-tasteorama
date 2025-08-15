@@ -1,4 +1,3 @@
-import React from "react";
 import type { Ingredient } from "../../interfaces/db";
 import s from "./IngredientsAdder.module.css";
 import Trash from "./Trash";

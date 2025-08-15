@@ -1,4 +1,3 @@
-import React from "react";
 import type { Recipe } from "../../../interfaces/db";
 import RecipeItem from "./RecipeItem";
 import s from "./RecipesList.module.css";

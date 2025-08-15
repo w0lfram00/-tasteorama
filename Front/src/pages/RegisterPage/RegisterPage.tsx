@@ -1,14 +1,12 @@
 import { type FormikHelpers } from "formik";
-import React from "react";
 import s from "./RegisterPage.module.css";
 import { useAppDispatch } from "../../hooks/reduxForTypeScript";
 import { registerUser } from "../../redux/auth/operations";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import successToast from "../../utils/toasts/successToast";
 
 const RegisterPage = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const initialValues = {

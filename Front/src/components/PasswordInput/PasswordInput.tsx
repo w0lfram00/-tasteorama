@@ -1,5 +1,5 @@
 import { ErrorMessage, Field } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import EyeOpen from "../../assets/eye-open.svg";
 import EyeClosed from "../../assets/eye-closed.svg";
 import s from "./PasswordInput.module.css";

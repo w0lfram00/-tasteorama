@@ -1,4 +1,3 @@
-import React from "react";
 import Flag from "./Flag";
 import { useAppDispatch } from "../../hooks/reduxForTypeScript";
 import { saveRecipe } from "../../redux/recipes/operations";

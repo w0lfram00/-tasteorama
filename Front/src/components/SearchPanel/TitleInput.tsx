@@ -1,5 +1,5 @@
 import { Field, useFormikContext } from "formik";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import type { FilterOptions } from "../../interfaces/requests/recipes";
 
 interface Props {

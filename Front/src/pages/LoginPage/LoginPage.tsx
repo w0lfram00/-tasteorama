@@ -1,4 +1,3 @@
-import React from "react";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import { NavLink } from "react-router-dom";
 import s from "./LoginForm.module.css";

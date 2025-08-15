@@ -1,4 +1,3 @@
-import React from "react";
 import Logo from "../Logo/Logo";
 import s from "./Header.module.css";
 import NavGuest from "./NavGuest";

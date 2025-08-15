@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./Logo.module.css";
 import SiteLogo from "../../assets/logo.svg";
 

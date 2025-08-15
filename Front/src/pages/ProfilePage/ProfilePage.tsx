@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import s from "./ProfilePage.module.css";
 import clsx from "clsx";

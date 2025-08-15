@@ -1,4 +1,3 @@
-import React from "react";
 import Logo from "../Logo/Logo";
 import { NavLink } from "react-router-dom";
 import s from "./Footer.module.css";

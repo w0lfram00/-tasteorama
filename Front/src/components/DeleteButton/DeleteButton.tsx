@@ -1,4 +1,3 @@
-import React from "react";
 import Bin from "../../assets/trash-bin.svg";
 import { useAppDispatch } from "../../hooks/reduxForTypeScript";
 import { deleteRecipeById } from "../../redux/recipes/operations";

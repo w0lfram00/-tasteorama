@@ -1,5 +1,4 @@
 import { Form, Formik } from "formik";
-import React from "react";
 import s from "./SearchPanel.module.css";
 import type { FilterOptions } from "../../interfaces/requests/recipes";
 import { useAppSelector } from "../../hooks/reduxForTypeScript";

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import RecipesPanel from "../RecipesPanel/RecipesPanel";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
 import { getSavedRecipes } from "../../redux/recipes/operations";

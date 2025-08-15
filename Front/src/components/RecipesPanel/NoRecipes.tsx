@@ -1,8 +1,6 @@
-import React from "react";
 import { useAppDispatch } from "../../hooks/reduxForTypeScript";
 import s from "./RecipesPanel.module.css";
 import { resetFilters } from "../../redux/recipes/slice";
-import { useFormikContext } from "formik";
 import { getAllRecipes } from "../../redux/recipes/operations";
 
 const NoRecipes = () => {

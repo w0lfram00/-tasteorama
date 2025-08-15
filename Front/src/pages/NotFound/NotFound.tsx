@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./NotFound.module.css";
 import Img from "../../assets/404.jpg";

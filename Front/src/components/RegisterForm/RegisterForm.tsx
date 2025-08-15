@@ -1,5 +1,4 @@
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
-import React from "react";
 import PasswordInput from "../PasswordInput/PasswordInput";
 import registerValidation from "../../validation/registerValidation";
 

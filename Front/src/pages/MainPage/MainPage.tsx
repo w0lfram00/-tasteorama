@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import SearchPanel from "../../components/SearchPanel/SearchPanel";
 import RecipesPanel from "../../components/RecipesPanel/RecipesPanel";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
