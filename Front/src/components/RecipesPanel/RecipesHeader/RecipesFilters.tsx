@@ -28,6 +28,9 @@ const RecipesFilters = () => {
         className={s.reset}
         onClick={() => {
           setClear((prev) => !prev);
+          updateSearchParams("category", "");
+          updateSearchParams("ingredient", "");
+          updateSearchParams("title", "");
         }}
       >
         Reset filters
