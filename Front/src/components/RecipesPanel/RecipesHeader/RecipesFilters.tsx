@@ -46,7 +46,7 @@ const RecipesFilters = () => {
         resetFunc={() => {
           dispatch(setFilterOptions({ category: "" }));
         }}
-        clearTrigger
+        clearTrigger={clear}
       />
       <CustomSelect
         name="ingredient"
