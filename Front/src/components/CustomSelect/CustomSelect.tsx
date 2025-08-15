@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Category, Ingredient } from "../../interfaces/db";
 import Arrow from "../../assets/arrow-down.svg";
 import s from "./CustomSelect.module.css";
@@ -12,6 +12,7 @@ interface Props {
   fontsClass?: string;
   inputClass?: string;
   resetFunc?: () => void;
+  clearTrigger?: boolean;
 }
 
 const CustomSelect = ({
@@ -21,8 +22,13 @@ const CustomSelect = ({
   inputClass,
   onChange,
   resetFunc,
+  clearTrigger,
 }: Props) => {
   const [query, setQuery] = useState<string>("");
+
+  useEffect(() => {
+    setQuery("");
+  }, [clearTrigger]);
 
   return (
     <div className={clsx(s.selectContainer, fontsClass)}>

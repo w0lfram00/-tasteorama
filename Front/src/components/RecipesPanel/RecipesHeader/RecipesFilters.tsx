@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CustomSelect from "../../CustomSelect/CustomSelect";
 import s from "./RecipesHeader.module.css";
 import {
@@ -15,15 +15,25 @@ const RecipesFilters = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
   const ingredients = useAppSelector(selectIngredients);
+  const [clear, setClear] = useState<boolean>(false);
 
   useEffect(() => {
+    dispatch(setFilterOptions({}));
     dispatch(getCategories());
     dispatch(getIngredients());
   }, []);
 
   return (
     <div className={s.filters}>
-      <button className={s.reset}>Reset filters</button>
+      <button
+        className={s.reset}
+        onClick={() => {
+          dispatch(setFilterOptions({}));
+          setClear((prev) => !prev);
+        }}
+      >
+        Reset filters
+      </button>
 
       <CustomSelect
         name="category"
@@ -36,6 +46,7 @@ const RecipesFilters = () => {
         resetFunc={() => {
           dispatch(setFilterOptions({ category: "" }));
         }}
+        clearTrigger
       />
       <CustomSelect
         name="ingredient"
