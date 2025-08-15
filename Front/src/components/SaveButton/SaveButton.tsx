@@ -1,6 +1,8 @@
 import Flag from "./Flag";
-import { useAppDispatch } from "../../hooks/reduxForTypeScript";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
 import { saveRecipe } from "../../redux/recipes/operations";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import successToast from "../../utils/toasts/successToast";
 
 interface Props {
   recipeId: string;
@@ -10,11 +12,15 @@ interface Props {
 
 const SaveButton = ({ recipeId, text, className }: Props) => {
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   return (
     <button
       className={className}
-      onClick={() => dispatch(saveRecipe(recipeId))}
+      onClick={() => {
+        if (isLoggedIn) dispatch(saveRecipe(recipeId));
+        else successToast("To save recipes log in first");
+      }}
     >
       {text}
       <Flag />
