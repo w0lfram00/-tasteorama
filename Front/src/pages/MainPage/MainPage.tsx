@@ -21,12 +21,20 @@ const MainPage = () => {
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState<FilterOptions>({});
 
-  const getSearchParams = () => {
+  const getSearchParams = useCallback(() => {
     const title = searchParams.get("title") || undefined;
     const category = searchParams.get("category") || undefined;
     const ingredient = searchParams.get("ingredient") || undefined;
-    setQuery({ title, category, ingredient });
-  };
+    return { title, category, ingredient };
+  }, [
+    searchParams.get("title"),
+    searchParams.get("category"),
+    searchParams.get("ingredient"),
+  ]);
+
+  useEffect(() => {
+    setQuery(getSearchParams());
+  }, []);
 
   const submit = () => {
     dispatch(
@@ -40,7 +48,7 @@ const MainPage = () => {
 
   useEffect(() => {
     submit();
-  }, [page, query]);
+  }, [page, query.category, query.ingredient, query.title]);
 
   return (
     <>
