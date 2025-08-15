@@ -4,7 +4,11 @@ import TitleInput from "./TitleInput";
 import { useSearchParams } from "react-router-dom";
 import updateSearchParams from "../../utils/updateSearchParams";
 
-const SearchPanel = () => {
+interface Props {
+  onSubmit: () => void;
+}
+
+const SearchPanel = ({ onSubmit }: Props) => {
   const [searchParams] = useSearchParams();
 
   const initialValues = {
@@ -19,6 +23,7 @@ const SearchPanel = () => {
           initialValues={initialValues}
           onSubmit={(values) => {
             updateSearchParams("title", values.title);
+            onSubmit();
           }}
         >
           <Form>

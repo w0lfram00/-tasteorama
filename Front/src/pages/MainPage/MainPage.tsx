@@ -26,7 +26,9 @@ const MainPage = () => {
     return { title, category, ingredient };
   };
 
-  useEffect(() => {
+  const submit = () => {
+    console.log(getSearchParams());
+
     dispatch(
       getAllRecipes({
         perPage: 32,
@@ -34,11 +36,14 @@ const MainPage = () => {
         filter: getSearchParams(),
       })
     );
+  };
+  useEffect(() => {
+    submit();
   }, [page, searchParams]);
 
   return (
     <>
-      <SearchPanel />
+      <SearchPanel onSubmit={submit} />
       <div className="container">
         <RecipesPanel
           title="Recipes"
