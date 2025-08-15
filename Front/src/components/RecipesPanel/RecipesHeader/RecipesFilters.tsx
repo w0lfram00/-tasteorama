@@ -9,7 +9,7 @@ import { selectCategories } from "../../../redux/categories/selectors";
 import { selectIngredients } from "../../../redux/ingredients/selectors";
 import { getCategories } from "../../../redux/categories/operations";
 import { getIngredients } from "../../../redux/ingredients/operations";
-import { setFilterOptions } from "../../../redux/recipes/slice";
+import { resetFilters, setFilterOptions } from "../../../redux/recipes/slice";
 
 const RecipesFilters = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ const RecipesFilters = () => {
       <button
         className={s.reset}
         onClick={() => {
-          dispatch(setFilterOptions({}));
+          dispatch(resetFilters());
           setClear((prev) => !prev);
         }}
       >
