@@ -1,7 +1,9 @@
 .searchPanel {
-  background: gray;
   padding: 128px 0;
   margin-bottom: 48px;
+  background-color: var(--light-gray);
+  background-image: url("../../assets/Banner.jpg");
+  background-size: cover;
 
   > div {
     display: flex;
