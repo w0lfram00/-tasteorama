@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import SearchPanel from "../../components/SearchPanel/SearchPanel";
 import RecipesPanel from "../../components/RecipesPanel/RecipesPanel";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
@@ -26,7 +26,7 @@ const MainPage = () => {
     return { title, category, ingredient };
   };
 
-  const submit = () => {
+  const submit = useCallback(() => {
     console.log(getSearchParams());
 
     dispatch(
@@ -36,10 +36,11 @@ const MainPage = () => {
         filter: getSearchParams(),
       })
     );
-  };
+  }, [searchParams, page]);
+
   useEffect(() => {
     submit();
-  }, [page, searchParams, submit]);
+  }, [page, searchParams]);
 
   return (
     <>
