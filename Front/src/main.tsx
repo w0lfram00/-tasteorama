@@ -6,11 +6,12 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
 import { persistor, store } from "./redux/store.ts";
+import ScreenLoader from "./components/ScreenLoader/ScreenLoader.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+      <PersistGate loading={<ScreenLoader />} persistor={persistor}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
