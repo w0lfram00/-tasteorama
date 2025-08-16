@@ -60,9 +60,11 @@ const slice = createSlice({
       state.recipes = [];
     },
     resetFilters: (state) => {
+      state.page = 1;
       state.filterOptions = {};
     },
     setFilterOptions: (state, action: PayloadAction<FilterOptions>) => {
+      state.page = 1;
       state.filterOptions = { ...state.filterOptions, ...action.payload };
     },
     resetError: (state) => {

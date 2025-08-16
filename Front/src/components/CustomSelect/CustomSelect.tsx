@@ -9,6 +9,7 @@ interface Props {
   name: "category" | "ingredient";
   options: Category[] | Ingredient[];
   onChange: (value: { name: string; _id: string }) => void;
+  initialValue?: string | null;
   fontsClass?: string;
   inputClass?: string;
   resetFunc?: () => void;
@@ -23,12 +24,16 @@ const CustomSelect = ({
   onChange,
   resetFunc,
   clearTrigger,
+  initialValue,
 }: Props) => {
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>(initialValue || "");
 
   useEffect(() => {
     setQuery("");
   }, [clearTrigger]);
+  useEffect(() => {
+    if (initialValue) setQuery(initialValue);
+  }, [initialValue]);
 
   return (
     <div className={clsx(s.selectContainer, fontsClass)}>

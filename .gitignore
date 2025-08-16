@@ -139,3 +139,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 Back/scripts/makeAllToObjId.ts
 Back/temp
+Front/src/redux/apiCore.ts

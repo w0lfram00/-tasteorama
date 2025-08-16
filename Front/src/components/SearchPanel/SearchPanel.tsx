@@ -3,13 +3,12 @@ import s from "./SearchPanel.module.css";
 import TitleInput from "./TitleInput";
 import { useSearchParams } from "react-router-dom";
 import updateSearchParams from "../../utils/updateSearchParams";
+import { useAppDispatch } from "../../hooks/reduxForTypeScript";
+import { setFilterOptions } from "../../redux/recipes/slice";
 
-interface Props {
-  onSubmit: () => void;
-}
-
-const SearchPanel = ({ onSubmit }: Props) => {
+const SearchPanel = () => {
   const [searchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
 
   const initialValues = {
     title: searchParams.get("title"),
@@ -23,7 +22,7 @@ const SearchPanel = ({ onSubmit }: Props) => {
           initialValues={initialValues}
           onSubmit={(values) => {
             updateSearchParams("title", values.title);
-            onSubmit();
+            dispatch(setFilterOptions({ title: values.title || undefined }));
           }}
         >
           <Form>

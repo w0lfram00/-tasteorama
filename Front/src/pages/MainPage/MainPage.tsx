@@ -1,58 +1,61 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchPanel from "../../components/SearchPanel/SearchPanel";
 import RecipesPanel from "../../components/RecipesPanel/RecipesPanel";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
 import {
   selectFilterOptions,
+  selectIsLoading,
   selectPage,
   selectPaginationInfo,
   selectRecipes,
 } from "../../redux/recipes/selectors";
 import { getAllRecipes } from "../../redux/recipes/operations";
+import { setFilterOptions } from "../../redux/recipes/slice";
 import { useSearchParams } from "react-router-dom";
 import type { FilterOptions } from "../../interfaces/requests/recipes";
+import ScreenLoader from "../../components/ScreenLoader/ScreenLoader";
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
   const recipes = useAppSelector(selectRecipes);
   const paginationInfo = useAppSelector(selectPaginationInfo);
   const filterOptions = useAppSelector(selectFilterOptions);
+  const isLoading = useAppSelector(selectIsLoading);
   const page = useAppSelector(selectPage);
   const [searchParams] = useSearchParams();
-  const [query, setQuery] = useState<FilterOptions>({});
+  const [filtersReady, setFiltersReady] = useState(false);
 
-  const getSearchParams = useCallback(() => {
+  const getSearchParams = (): FilterOptions => {
     const title = searchParams.get("title") || undefined;
     const category = searchParams.get("category") || undefined;
     const ingredient = searchParams.get("ingredient") || undefined;
     return { title, category, ingredient };
-  }, [
-    searchParams.get("title"),
-    searchParams.get("category"),
-    searchParams.get("ingredient"),
-  ]);
-
-  useEffect(() => {
-    setQuery(getSearchParams());
-  }, []);
-
-  const submit = () => {
-    dispatch(
-      getAllRecipes({
-        perPage: 32,
-        page,
-        filter: query,
-      })
-    );
   };
 
   useEffect(() => {
-    submit();
-  }, [page, query.category, query.ingredient, query.title]);
+    dispatch(setFilterOptions(getSearchParams()));
+    setFiltersReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!filtersReady) return;
+
+    const timeout = setTimeout(() => {
+      dispatch(
+        getAllRecipes({
+          perPage: 32,
+          page,
+          filter: filterOptions,
+        })
+      );
+    }, 50);
+
+    return () => clearTimeout(timeout);
+  }, [page, filterOptions]);
 
   return (
     <>
-      <SearchPanel onSubmit={submit} />
+      <SearchPanel />
       <div className="container">
         <RecipesPanel
           title="Recipes"
@@ -62,6 +65,7 @@ const MainPage = () => {
           filterOptions={filterOptions}
         />
       </div>
+      {page == 1 && isLoading && <ScreenLoader />}
     </>
   );
 };
