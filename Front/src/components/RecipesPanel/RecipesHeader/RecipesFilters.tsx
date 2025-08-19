@@ -13,6 +13,7 @@ import updateSearchParams from "../../../utils/updateSearchParams";
 import { useSearchParams } from "react-router-dom";
 import { resetFilters, setFilterOptions } from "../../../redux/recipes/slice";
 import { selectFilterOptions } from "../../../redux/recipes/selectors";
+import clearSearchParams from "../../../utils/clearSearchParam";
 
 const RecipesFilters = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +22,7 @@ const RecipesFilters = () => {
   const [clear, setClear] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const [initialIngr, setInitialIngr] = useState<string | undefined>("");
+  const [initialCat, setInitialCat] = useState<string | undefined>("");
   const filterOptions = useAppSelector(selectFilterOptions);
 
   useEffect(() => {
@@ -30,9 +32,10 @@ const RecipesFilters = () => {
   useEffect(() => {
     setInitialIngr(
       ingredients.find((ingr) => ingr._id == searchParams.get("ingredient"))
-        ?.name
+        ?.name || ""
     );
-  }, [ingredients]);
+    setInitialCat(searchParams.get("category") || "");
+  }, [filterOptions]);
 
   return (
     <div className={s.filters}>
@@ -40,9 +43,7 @@ const RecipesFilters = () => {
         className={s.reset}
         onClick={() => {
           setClear((prev) => !prev);
-          updateSearchParams("category", "");
-          updateSearchParams("ingredient", "");
-          updateSearchParams("title", "");
+          clearSearchParams();
           dispatch(resetFilters());
         }}
       >
@@ -52,7 +53,7 @@ const RecipesFilters = () => {
       <CustomSelect
         name="category"
         options={categories}
-        initialValue={searchParams.get("category")}
+        initialValue={initialCat}
         onChange={(value: { name: string; _id: string }) => {
           updateSearchParams("category", value.name);
           dispatch(setFilterOptions({ category: value.name }));
@@ -81,6 +82,7 @@ const RecipesFilters = () => {
           if (filterOptions.ingredient)
             dispatch(setFilterOptions({ ingredient: undefined }));
         }}
+        clearTrigger={clear}
       />
     </div>
   );

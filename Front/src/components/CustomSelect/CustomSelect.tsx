@@ -32,7 +32,7 @@ const CustomSelect = ({
     setQuery("");
   }, [clearTrigger]);
   useEffect(() => {
-    if (initialValue) setQuery(initialValue);
+    setQuery(initialValue || "");
   }, [initialValue]);
 
   return (

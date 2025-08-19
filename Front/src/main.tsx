@@ -9,13 +9,13 @@ import { persistor, store } from "./redux/store.ts";
 import ScreenLoader from "./components/ScreenLoader/ScreenLoader.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={<ScreenLoader />} persistor={persistor}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </StrictMode>
+  // <StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={<ScreenLoader />} persistor={persistor}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
+  // </StrictMode>
 );

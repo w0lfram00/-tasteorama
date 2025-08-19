@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../../hooks/reduxForTypeScript";
 import s from "./RecipesPanel.module.css";
 import { resetFilters } from "../../redux/recipes/slice";
-import { getAllRecipes } from "../../redux/recipes/operations";
+import clearSearchParams from "../../utils/clearSearchParam";
 
 const NoRecipes = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ const NoRecipes = () => {
       <button
         onClick={() => {
           dispatch(resetFilters());
-          dispatch(getAllRecipes({ perPage: 32 }));
+          clearSearchParams();
         }}
       >
         Reset search and filters

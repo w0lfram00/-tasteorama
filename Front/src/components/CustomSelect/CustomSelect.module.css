@@ -20,6 +20,7 @@
     height: 24px;
     transition: transform 0.3s ease;
     transform: rotateX(180deg) translateY(50%);
+    pointer-events: none;
   }
   input:focus ~ .arrow {
     transform: rotateX(0deg) translateY(-50%);

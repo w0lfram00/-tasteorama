@@ -38,6 +38,21 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
+    const handlePopState = () => {
+      const currentParams = new URLSearchParams(window.location.search);
+      const title = currentParams.get("title") || undefined;
+      const category = currentParams.get("category") || undefined;
+      const ingredient = currentParams.get("ingredient") || undefined;
+
+      dispatch(setFilterOptions({ title, category, ingredient }));
+      setFiltersReady(true);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
     if (!filtersReady) return;
 
     const timeout = setTimeout(() => {
@@ -55,7 +70,7 @@ const MainPage = () => {
 
   return (
     <>
-      <SearchPanel />
+      <SearchPanel initialValues={{ title: filterOptions.title || "" }} />
       <div className="container">
         <RecipesPanel
           title="Recipes"
