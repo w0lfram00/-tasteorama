@@ -12,7 +12,7 @@ const NavUser = () => {
         Recipes
       </NavLink>
       <NavLink
-        to={`/profile/own`}
+        to={`/profile`}
         className={({ isActive }) => (isActive ? s.activeLink : s.inactiveLink)}
       >
         My Profile
