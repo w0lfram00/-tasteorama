@@ -26,12 +26,12 @@ const LoginPage = () => {
     values: typeof initialValues,
     action: FormikHelpers<typeof initialValues>
   ) => {
-    const response = await dispatch(loginUser(values)).unwrap();
-    if (response.accessToken) {
+    try {
+      await dispatch(loginUser(values)).unwrap();
       successToast("Logged in successfully!");
       action.resetForm();
-    } else {
-      errorToast("Wrong password or login");
+    } catch {
+      errorToast("Wrond password or login");
     }
   };
 
