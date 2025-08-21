@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxForTypeScript";
 import { loginUser } from "../../redux/auth/operations";
 import { selectUser } from "../../redux/auth/selectors";
 import successToast from "../../utils/toasts/successToast";
+import errorToast from "../../utils/toasts/errorToast";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
@@ -25,10 +26,13 @@ const LoginPage = () => {
     values: typeof initialValues,
     action: FormikHelpers<typeof initialValues>
   ) => {
-    await dispatch(loginUser(values));
-    successToast("Logged in successfully!");
-
-    action.resetForm();
+    const response = await dispatch(loginUser(values)).unwrap();
+    if (response.accessToken) {
+      successToast("Logged in successfully!");
+      action.resetForm();
+    } else {
+      errorToast("Wrong password or login");
+    }
   };
 
   return (
