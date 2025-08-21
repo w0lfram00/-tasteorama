@@ -12,7 +12,10 @@ import { getIngredients } from "../../../redux/ingredients/operations";
 import updateSearchParams from "../../../utils/updateSearchParams";
 import { useSearchParams } from "react-router-dom";
 import { resetFilters, setFilterOptions } from "../../../redux/recipes/slice";
-import { selectFilterOptions } from "../../../redux/recipes/selectors";
+import {
+  selectFilterOptions,
+  selectNavigateTrigger,
+} from "../../../redux/recipes/selectors";
 import clearSearchParams from "../../../utils/clearSearchParam";
 
 const RecipesFilters = () => {
@@ -21,21 +24,36 @@ const RecipesFilters = () => {
   const ingredients = useAppSelector(selectIngredients);
   const [clear, setClear] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
-  const [initialIngr, setInitialIngr] = useState<string | undefined>("");
-  const [initialCat, setInitialCat] = useState<string | undefined>("");
+  const navigateTrigger = useAppSelector(selectNavigateTrigger);
+  const [initialIngr, setInitialIngr] = useState<{ value: string | undefined }>(
+    { value: "" }
+  );
+  const [initialCat, setInitialCat] = useState<{ value: string | undefined }>({
+    value: "",
+  });
   const filterOptions = useAppSelector(selectFilterOptions);
+  const [ingrsReady, setIngrsReady] = useState(false);
 
   useEffect(() => {
-    dispatch(getCategories());
-    dispatch(getIngredients());
+    const func = async () => {
+      dispatch(getCategories());
+      await dispatch(getIngredients()).unwrap();
+      setIngrsReady(true);
+    };
+    func();
   }, []);
+
   useEffect(() => {
-    setInitialIngr(
+    if (!ingrsReady) return;
+
+    const ingrToSet =
       ingredients.find((ingr) => ingr._id == searchParams.get("ingredient"))
-        ?.name || ""
-    );
-    setInitialCat(searchParams.get("category") || "");
-  }, [filterOptions]);
+        ?.name || "";
+    setInitialIngr({ value: ingrToSet });
+
+    const catToSet = searchParams.get("category") || "";
+    setInitialCat({ value: catToSet });
+  }, [navigateTrigger, ingrsReady]);
 
   return (
     <div className={s.filters}>

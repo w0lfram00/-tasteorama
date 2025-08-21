@@ -13,3 +13,5 @@ export const selectError = (state: StoreState) => state.recipes.error;
 export const selectSavedRecipes = (state: StoreState) =>
   state.recipes.savedRecipes;
 export const selectLoadingMap = (state: StoreState) => state.recipes.loadingMap;
+export const selectNavigateTrigger = (state: StoreState) =>
+  state.recipes.navigateTrigger;

@@ -25,6 +25,7 @@ export interface RecipesSliceState {
   paginationInfo: PaginationInfo;
   filterOptions: FilterOptions;
   isLoading: boolean;
+  navigateTrigger: boolean;
   loadingMap: Record<string, boolean>;
   error: RequestError | null;
 }
@@ -42,6 +43,7 @@ const initialState: RecipesSliceState = {
   },
   filterOptions: {},
   isLoading: false,
+  navigateTrigger: false,
   loadingMap: {},
   error: null,
 };
@@ -69,6 +71,9 @@ const slice = createSlice({
     },
     resetError: (state) => {
       state.error = null;
+    },
+    navigateTriggered: (state) => {
+      state.navigateTrigger = !state.navigateTrigger;
     },
   },
   extraReducers: (builder) => {
@@ -135,6 +140,7 @@ export const {
   resetRecipes,
   setFilterOptions,
   resetError,
+  navigateTriggered,
 } = slice.actions;
 
 function fillRecipeState(

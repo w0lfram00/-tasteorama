@@ -149,6 +149,7 @@ const CreateRecipeForm = () => {
           >
             <input
               type="file"
+              accept="image/png, image/jpeg"
               ref={fileInputRef}
               onChange={(e) => {
                 if (e.target.files) setFile(e.target.files[0]);

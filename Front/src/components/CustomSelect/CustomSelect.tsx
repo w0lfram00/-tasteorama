@@ -9,7 +9,7 @@ interface Props {
   name: "category" | "ingredient";
   options: Category[] | Ingredient[];
   onChange: (value: { name: string; _id: string }) => void;
-  initialValue?: string | null;
+  initialValue?: { value: string | undefined } | null;
   fontsClass?: string;
   inputClass?: string;
   resetFunc?: () => void;
@@ -26,13 +26,15 @@ const CustomSelect = ({
   clearTrigger,
   initialValue,
 }: Props) => {
-  const [query, setQuery] = useState<string>(initialValue || "");
+  const [query, setQuery] = useState<{ value: string }>({
+    value: initialValue?.value || "",
+  });
 
   useEffect(() => {
-    setQuery("");
+    setQuery({ value: "" });
   }, [clearTrigger]);
   useEffect(() => {
-    setQuery(initialValue || "");
+    setQuery({ value: initialValue?.value || "" });
   }, [initialValue]);
 
   return (
@@ -40,16 +42,16 @@ const CustomSelect = ({
       <input
         className={inputClass}
         type="text"
-        onChange={(e) => setQuery(e.target.value)}
-        value={query}
+        onChange={(e) => setQuery({ value: e.target.value })}
+        value={query.value}
         autoComplete="off"
         placeholder={capitalize(name)}
         onFocus={() => {
-          setQuery("");
+          setQuery({ value: "" });
           if (resetFunc) resetFunc();
         }}
         onBlur={() => {
-          setQuery("");
+          setQuery({ value: "" });
           if (resetFunc) resetFunc();
         }}
       />
@@ -57,7 +59,9 @@ const CustomSelect = ({
       <ul className={s.selection}>
         {options
           .filter((option) =>
-            option.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+            option.name
+              .toLocaleLowerCase()
+              .includes(query.value.toLocaleLowerCase())
           )
           .map((option) => (
             <li
@@ -65,7 +69,7 @@ const CustomSelect = ({
               value={option.name}
               onMouseDown={() => {
                 setTimeout(() => {
-                  setQuery(option.name);
+                  setQuery({ value: option.name });
                   onChange(option);
                 }, 0);
               }}

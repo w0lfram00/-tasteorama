@@ -40,8 +40,14 @@ api.interceptors.response.use(
 
       try {
         const { accessToken } = await store.dispatch(refreshUser()).unwrap();
+        console.log(accessToken);
+
         setAuthHeader(accessToken);
         processQueue(null, accessToken);
+        originalRequest.headers = {
+          ...originalRequest.headers,
+          Authorization: `Bearer ${accessToken}`,
+        };
         return api(originalRequest);
       } catch (err) {
         processQueue(err);

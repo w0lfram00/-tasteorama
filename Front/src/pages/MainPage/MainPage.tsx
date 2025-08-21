@@ -10,7 +10,7 @@ import {
   selectRecipes,
 } from "../../redux/recipes/selectors";
 import { getAllRecipes } from "../../redux/recipes/operations";
-import { setFilterOptions } from "../../redux/recipes/slice";
+import { navigateTriggered, setFilterOptions } from "../../redux/recipes/slice";
 import { useSearchParams } from "react-router-dom";
 import type { FilterOptions } from "../../interfaces/requests/recipes";
 import ScreenLoader from "../../components/ScreenLoader/ScreenLoader";
@@ -45,6 +45,7 @@ const MainPage = () => {
       const ingredient = currentParams.get("ingredient") || undefined;
 
       dispatch(setFilterOptions({ title, category, ingredient }));
+      dispatch(navigateTriggered());
       setFiltersReady(true);
     };
 
