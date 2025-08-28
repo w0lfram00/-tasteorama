@@ -19,7 +19,6 @@ tags:
     description: Operations with Ingredients
 servers:
   - url: https://tasteorama-idz6.onrender.com/api
-  - url: http://localhost:3000/api
 paths:
   /auth/register:
     post:
